@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{/checkout/images/dist/logos/favicon.png}" type="image/png">
+    <link rel="stylesheet" th:href="@{/checkout/fonts/Inter/inter-fontfaces.css}">
+    <link rel="stylesheet" th:href="@{/checkout/css/vendor/bootstrapv5-0-2/bootstrapv5-0-2.css}">
+    <link rel="stylesheet" th:href="@{/checkout/css/main.min.css}">
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <script th:src="@{/js/header.js}"></script>
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+    <style>
+        .bge6{
+            background-color: #ec610a !important;
+            color: #ffffff !important;
+        }
+        .product-meta ul li{
+            padding-top: 6px;
+        }
+        .nice-select{
+            padding-top:8px;
+        }
+
+        .cusInfoTop {
+            font-size: 16px;
+            padding-top: 12px;
+            padding-right:15px;
+        }
+
+        .cusInfoBottom {
+            font-size: 16px;
+            padding-right: 15px;
+            padding-top: 5px;
+        }
+        .header-search-area .nice-select{
+            line-height: 25px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Start of Whole Site Wrapper with mobile menu support -->
+    <div id="whole" class="whole-site-wrapper color-scheme-one">
+
+        <!-- Start of Header -->
+        <div th:include="components/header :: html"></div>
+        <!-- End of Header -->
+
+        <div class="fixed-header-space">
+           
+        </div> <!-- empty placeholder div for Fixed Menu bar height-->
+
+        <!-- Start of Breadcrumbs -->
+        <div class="breadcrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" th:href="@{/}">首页</a>
+                            <a class="breadcrumb-item" th:href="@{/admin/queryCart.do}">购物车</a>
+                            <span class="breadcrumb-item active" >结账</span>
+                        </nav>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Breadcrumbs -->
+
+        <!-- Start of Main Content Wrapper -->
+        <div id="content" class="main-content-wrapper">
+            
+            <!-- Start of Checkout Wrapper -->
+            <div class="checkout-wrapper">
+                <div class="container">
+                    <div class="row on" style="width: 1300px">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <main id="primary" class="site-main">
+                                <div class="checkout-area">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                                            <div >
+                                                <div class="section-title left-aligned with-border">
+                                                    <h2>确认信息</h2>
+                                                </div>
+                                                <div class="page-container profile" data-profile-page="orders"  th:if="${resultVo.orderList.size() eq 0}" style="height:930px;">
+                                                    <img th:src="@{/images/about/default_order.jpg}" style="width: 70%; margin-left: 100px"/>
+                                                </div>
+                                                <div class="page-container profile" data-profile-page="orders"  th:if="${resultVo.orderList.size() ne 0}" style="height:930px;">
+                                                    <div class="page-section orders">
+                                                        <div class="page-margin">
+                                                            <div class="page-margin__content">
+                                                                <div class="page-section__body">
+                                                                    <div class="profile-page__body">
+                                                                        <div class="row">
+                                                                            <div class="profile-page__content pre-scrollable" style="max-height: 930px;">
+                                                                                <div class="orders__list">
+                                                                                    <!--确认信息记录-->
+                                                                                    <div class="orders__list-item" th:each="order:${resultVo.orderList}">
+                                                                                        <input type="hidden" class="skuid" th:value="${order.skuid}"/>
+                                                                                        <div class="order-item">
+                                                                                            <div class="order-item__body">
+                                                                                                <div class="row align-items-center">
+                                                                                                    <div class="col-xxl-12 col-xl-12 col-12">
+                                                                                                        <div class="order-item__num">
+                                                                                                            <div class="order-date">
+                                                                                                                <div class="order-date__topline">
+                                                                                                                    <span th:inline="text" style="font-size: 18px; font-weight: bold">[[${order.name}]]
+                                                                                                                        <span style="font-size: 13px; margin-left: 200px;">价格:</span>
+                                                                                                                        <span style="font-size: 13px; " th:text="|${#numbers.formatCurrency(order.singleProductPrice)}&nbsp;✖️&nbsp;${order.singleProductTotalNum}|"></span>
+                                                                                                                    </span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="order-status">
+                                                                                                                <span class="badge badge-grad-1 badge-lg" th:text="${order.orderStatus}"></span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-xxl-12 col-xl-12 col-12">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-11">
+                                                                                                                <div class="order-item__total">
+                                                                                                                    <div class="order-item__total-topline">
+                                                                                                                        <img style="width:110px; height:110px;" th:src="|@{http://rcxsumzdq.hn-bkt.clouddn.com/}${order.image}|">
+                                                                                                                        <div class="product-meta" style="padding-left:20px; height:111px;">
+                                                                                                                            <ul class="list-unstyled">
+                                                                                                                                <li>商品品牌 <a href="#"><span th:text="${order.brand}"></span></a></li>
+                                                                                                                                <li>商品总价: <span th:text="${order.singleProductTotalPrice}"></span></li>
+                                                                                                                                <li>支付状态: <span th:text="${order.payStatus}"></span></li>
+                                                                                                                                <li>创建时间: <span th:text="${order.createTime}"></span></li>
+                                                                                                                            </ul>
+                                                                                                                        </div>
+                                                                                                                        <div class="product-details" style="width:251px; padding-left: 15px;">
+                                                                                                                            <div class="product-actions" style="padding-left: 19px;margin-top: -3px;">
+                                                                                                                                <div class="product-size clearfix" style="display: flex;flex-direction: row;margin-bottom: 0px !important;width: 350px;!important;">
+                                                                                                                                    <label class="cusInfoTop" style="width: 50px;">套餐</label>
+                                                                                                                                    <span class="cusInfoTop" style="margin-top: -4px;font-size: 14px;width: 100%;margin-left: -7px;" th:text="${order.setMeal}"></span>
+                                                                                                                                </div>
+                                                                                                                                <div class="product-color clearfix" style="width: 350px;!important;">
+                                                                                                                                    <label class="cusInfoBottom color" style="display: initial">颜色</label>
+                                                                                                                                    <span class="cusInfoBottom" style="margin-top: -20px; font-size: 13px; margin-left: -8px; display: inline;padding-right: 21px;!important;" th:text="${order.color}"></span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end of checkout-form -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                            <div class="order-summary">
+                                                <div class="section-title left-aligned with-border">
+                                                    <h2>收货地址</h2>
+                                                </div>
+                                                <div class="product-container">
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-list">
+                                                        <div class="product-inner media align-items-center">
+                                                            <div class="media-body">
+                                                                <p class="product-quantity" style="font-size: 20px">重庆市江北区</p>
+                                                                <p class="product-final-price" style="font-size: 16px">xxxxxxxxxxxx</p>
+                                                            </div>
+                                                            <div>
+                                                                <button>修改地址</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end of product-container -->
+                                                <div class="order-review">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                <tr class="order-total">
+                                                                    <th>合计</th>
+                                                                    <td class="text-center"><strong><span class="primary-color" th:text="${#numbers.formatCurrency(resultVo.checkOutPrice)}" id="checkOutPrice"></span></strong></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="checkout-payment">
+                                                    <form>
+                                                        <div class="">
+                                                            <div class="custom-radio">
+                                                                <input class="form-check-input" type="radio" name="payment" id="check_payment" value="AliPay" checked>
+                                                                <span class="checkmark"></span>
+                                                                <label class="form-check-label" for="check_payment">支付宝</label>
+                                                            </div>
+                                                            <div class="custom-radio">
+                                                                <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="WechatPay">
+                                                                <span class="checkmark"></span>
+                                                                <label class="form-check-label" for="cash_delivery_payment">微信</label>
+                                                            </div>
+                                                            <div class="custom-radio">
+                                                                <input class="form-check-input" type="radio" name="payment" id="paypal_payment" value="UnionPay">
+                                                                <span class="checkmark"></span>
+                                                                <label class="form-check-label" for="paypal_payment">银联</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row justify-content-end">
+                                                            <input type="button" class="btn btn-secondary bge6" id="submitBtn" value="提交订单">
+                                                        </div>
+                                                    </form>
+                                                </div> <!-- end of checkout-payment -->
+                                            </div> <!-- end of order-summary -->
+                                        </div>
+                                    </div> <!-- end of row -->
+                                </div> <!-- end of checkout-area -->
+                            </main> <!-- end of #primary -->
+                        </div>
+                    </div> <!-- end of row -->
+                </div> <!-- end of container -->
+            </div>
+            <!-- End of Checkout Wrapper -->
+
+        </div>
+        <!-- End of Main Content Wrapper -->
+
+        <!-- Start of Footer -->
+        <div th:include="components/footer :: html"></div>
+        <!-- End of Footer -->
+
+        <!-- Start of Scroll to Top -->
+        <div id="to_top">
+            <i class="ion ion-ios-arrow-forward"></i>
+            <i class="ion ion-ios-arrow-forward"></i>
+        </div>
+        <!-- End of Scroll to Top -->
+
+        <div id="formDiv"></div>
+    </div>
+    <!-- End of Whole Site Wrapper -->
+
+    <!-- jQuery JS -->
+    <script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+    <!-- Popper JS -->
+    <script th:src="@{/js/popper.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins.js}"></script>
+
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <script th:src="@{/checkout/js/vendor/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/checkout/js/vendor/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/checkout/js/plugins/swiper-bundle.min.js}"></script>
+    <!-- ~~~~~~~~~~~~~~~~~ JS Files (Main JS) ~~~~~~~~~~~~~~~~~ -->
+    <script th:src="@{/checkout/js/pages/profile/script.master.js}"></script>
+    <script th:src="@{/checkout/js/main.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    $("#submitBtn").click(function () {
+        let totalAmount = [[${resultVo.checkOutPrice}]];
+        let payment = $("input[name='payment']").val();
+        let skuids = $(".skuid");
+        let htmlStr = "";
+        if (skuids.length >= 1) {
+            $.each(skuids, function () {
+                htmlStr += "&skuid=" + $(this).val();
+            });
+        } else {
+            htmlStr = "&skuid=" + $(skuids).val();
+        }
+
+        location.href = "/admin/pay.do?totalAmount=" + totalAmount + "&payment=" + payment + htmlStr;
+
+        // $.ajax({
+        //     url: "/admin/pay.do?totalAmount",
+        //     data: {
+        //         skuid:htmlStr.substring(0, htmlStr.lastIndexOf(",")),
+        //         totalAmount:totalAmount,
+        //         payment:payment
+        //     },
+        //     type: "post",
+        //     success: function (data) {
+        //         let html = data;
+        //         let divForm = document.getElementsByTagName('divform')
+        //         if (divForm.length) {
+        //             document.body.removeChild(divForm[0])
+        //         }
+        //         const div=document.createElement('divform');
+        //         div.innerHTML=html;//这个msg就是后台返回的一串from表单
+        //         document.body.appendChild(div);
+        //         document.forms[0].setAttribute('target', '_blank') // 新开窗口跳转
+        //         document.forms[0].submit();
+        //     }
+        // })
+    })
+</script>
+</body>
+</html>

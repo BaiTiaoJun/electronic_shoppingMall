@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductSeriesCartRelationMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.ProductSeriesCartRelation">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sid, cid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_series_cart_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_product_series_cart_relation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.ProductSeriesCartRelation">
+    insert into tbl_product_series_cart_relation (id, sid, cid)
+    values (#{id,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.ProductSeriesCartRelation">
+    insert into tbl_product_series_cart_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.ProductSeriesCartRelation">
+    update tbl_product_series_cart_relation
+    <set>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.ProductSeriesCartRelation">
+    update tbl_product_series_cart_relation
+    set sid = #{sid,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectSeriesCartRelationByCid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product_series_cart_relation
+    where cid = #{cid} and sid = #{series}
+  </select>
+
+  <delete id="deleteBySidAndCid">
+    delete
+    from tbl_product_series_cart_relation
+    where sid = #{sid} and cid = #{cid}
+  </delete>
+</mapper>

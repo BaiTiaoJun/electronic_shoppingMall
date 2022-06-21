@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CartMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.Cart">
+    <id column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="product_number" jdbcType="INTEGER" property="productNumber" />
+    <result column="product_total_price" jdbcType="DOUBLE" property="productTotalPrice" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="cart_status" jdbcType="VARCHAR" property="cartStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, product_number, product_total_price, create_time, create_by, update_time, cart_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_cart
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_cart
+    where cid = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.Cart">
+    insert into tbl_cart (cid, product_number, product_total_price,
+      create_time, create_by, update_time,
+      cart_status)
+    values (#{cid,jdbcType=VARCHAR}, #{productNumber,jdbcType=INTEGER}, #{productTotalPrice,jdbcType=DOUBLE},
+      #{createTime,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{cartStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.Cart">
+    insert into tbl_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="productNumber != null">
+        product_number,
+      </if>
+      <if test="productTotalPrice != null">
+        product_total_price,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="cartStatus != null">
+        cart_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null">
+        #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null">
+        #{productTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cartStatus != null">
+        #{cartStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.Cart">
+    update tbl_cart
+    <set>
+      <if test="productNumber != null">
+        product_number = #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productTotalPrice != null">
+        product_total_price = #{productTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cartStatus != null">
+        cart_status = #{cartStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.Cart">
+    update tbl_cart
+    set product_number = #{productNumber,jdbcType=INTEGER},
+      product_total_price = #{productTotalPrice,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      cart_status = #{cartStatus,jdbcType=VARCHAR},
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+<!--更新购物车之前查看此用户是否存在购物车-->
+  <select id="selectCartByUid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_cart
+    where create_by=#{uid}
+  </select>
+<!--  添加新商品的时候更新购物车-->
+  <update id="updateCartByCart" parameterType="com.example.domain.Cart">
+    update tbl_cart
+    set product_number = product_number + #{productNumber},
+        product_total_price = product_total_price + #{productTotalPrice},
+        update_time = #{updateTime}
+    where cid = #{cid}
+  </update>
+
+  <select id="selectSeriesCartRelationByCid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_cart
+    where cid = #{cid}
+  </select>
+
+<!--  购物车的购物车数量为0就删除此购物车-->
+  <delete id="deleteByUid" parameterType="string">
+    delete
+    from tbl_cart
+    where create_by = #{uid}
+  </delete>
+
+<!--  删除购物车记录以后更新购物车-->
+  <update id="updateByMap1" parameterType="map">
+    update tbl_cart
+    set product_number = product_number - #{decrementNumber},
+        product_total_price = product_total_price - #{decrementPrice},
+        update_time = #{updateTime}
+    where cid = #{cid}
+  </update>
+
+  <update id="updateCartByUid" parameterType="com.example.domain.Cart">
+    update tbl_cart
+    set
+        product_number = product_number + #{productNumber},
+        product_total_price = product_total_price + #{productTotalPrice},
+        update_time = #{updateTime}
+    where create_by = #{createBy}
+  </update>
+</mapper>

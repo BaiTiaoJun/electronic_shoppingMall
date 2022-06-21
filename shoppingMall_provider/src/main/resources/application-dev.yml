@@ -1,0 +1,44 @@
+#    提供者的端口和上下文根
+server:
+  port: 8083
+  servlet:
+    context-path: /shoppingMall_provider
+
+#    配置数据库的数据源
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/electronic_shoppingmall?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      username: root
+      password: zhangshun
+
+  #    配置redis的地址和端口
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+#    配置dubbo的名称和注册中心地址
+dubbo:
+  application:
+    name: shoppingMall_provider
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+
+#    配置mybatis的映射文件路径和实体对象的别名
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.domain
+
+#   配置pagehelper属性
+pagehelper:
+#  指定分页插件使用的数据库语言，pagehelper会选择合适的分页方式
+#  dialect: mysql
+#  分页合理化，默认是false，首页小于0，查询第一页，尾页大于总页数，查询最后一页
+  reasonable: true
+#  支持mapper接口参数来传递分页参数
+  support-methods-arguments: true

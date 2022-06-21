@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.Address">
+    <id column="aid" jdbcType="VARCHAR" property="aid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />
+    <result column="postal_email" jdbcType="VARCHAR" property="postalEmail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aid, address, address_detail, postal_email
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_address
+    where aid = #{aid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_address
+    where aid = #{aid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.Address">
+    insert into tbl_address (aid, address, address_detail, 
+      postal_email)
+    values (#{aid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, 
+      #{postalEmail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.Address">
+    insert into tbl_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="addressDetail != null">
+        address_detail,
+      </if>
+      <if test="postalEmail != null">
+        postal_email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="postalEmail != null">
+        #{postalEmail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.Address">
+    update tbl_address
+    <set>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="postalEmail != null">
+        postal_email = #{postalEmail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.Address">
+    update tbl_address
+    set address = #{address,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      postal_email = #{postalEmail,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <title>头部</title>
+    <!-- favicon
+============================================ -->
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <style type="text/css">
+        .sel:hover {
+            color: #ffa500;
+        }
+    </style>
+</head>
+<body>
+<header class="header with-bg white-scheme">
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-3 align-self-center">
+                    <div class="logo">
+                        <a th:href="@{/}"><img th:src="@{/images/logo5.png}" alt="Logo" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                    <div class="top-header">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-6 order-md-2 order-lg-1">
+
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 order-md-1 order-lg-2">
+                                <ul class="list-inline">
+                                    <li class="top-links list-inline-item">
+                                        <div class="btn-group">
+                                            <button class="btn-link dropdown-toggle" id="personal-center">
+                                                <a class="sel">我的淘淘乐</a>
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" id="menu">
+                                                <!--登录前的状态-->
+                                                <ul th:if="${session.get('user')} eq null">
+                                                    <li><a th:href="@{/admin/toLogin.do}">登录</a></li>
+                                                    <li><a th:href="@{/admin/toRegister.do}">注册</a></li>
+                                                </ul>
+                                                <!--登录后的状态-->
+                                                <ul th:if="${session.get('user')} ne null">
+                                                    <li><a th:href="|@{/admin/toMyAccount.do}?uid=${session.get('user').uid}|">个人中心</a></li>
+                                                    <li><a th:href="@{/admin/queryCart.do}">购物车</a></li>
+                                                    <li><a th:href="|@{/admin/toOrder.do}?currentPage=1|">订单</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> <!-- end of top-header -->
+
+                    <div class="bottom-header">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                <div class="header-search-area">
+                                    <div class="search-categories">
+                                        <form action="#">
+                                            <div class="search-form-input">
+                                                <!--类型选择-->
+                                                <select id="select" class="nice-select">
+                                                </select>
+                                                <div class="search-wrapper">
+                                                    <input type="text" placeholder="搜索" id="searchText">
+                                                    <button class="header-search-btn" type="button" id="searchBtn">
+                                                        <i class="ion ion-ios-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> <!-- end of header-search-area -->
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                <div class="header-cart-area">
+                                    <div class="header-cart">
+                                        <div class="btn-group">
+                                            <button class="btn-link dropdown-toggle icon-cart" th:if="${session.get('user')} ne null">
+                                                <i class="pe-7s-cart"></a></i>
+                                                <span class="count-style">2</span>
+                                            </button>
+                                            <!--首页的用户购物车展示窗口，用户登录后展示-->
+                                            <div class="dropdown-menu row pre-scrollable" th:if="${session.get('user')} ne null">
+                                                <div class="shopping-cart-content">
+                                                    <ul class="list-unstyled">
+                                                        <li class="single-cart-item media">
+                                                            <div class="shopping-cart-img mr-4">
+                                                                <a href="#">
+                                                                    <img class="img-fluid" alt="Cart Item"
+                                                                         th:src="@{/images/cart/cart-1.jpg}">
+                                                                </a>
+                                                            </div>
+                                                            <div class="shopping-cart-title media-body">
+                                                                <h4><a href="#">Donec Ac Tempus</a></h4>
+                                                                <p class="cart-price">$120.00</p>
+                                                                <div class="product-attr">
+                                                                    <span>Size: S</span>
+                                                                    <span>Color: Black</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="shopping-cart-delete">
+                                                                <a href="#"><i class="ion ion-md-close"></i></a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="shopping-cart-total">
+                                                        <h4>Total : <span>$320.00</span></h4>
+                                                    </div>
+                                                    <div class="shopping-cart-btn">
+                                                        <a class="default-btn" th:href="@{/admin/queryCart.do}">查看购物车</a>
+                                                        <a class="default-btn" th:href="|@{/admin/toOrder.do}?currentPage=1|">查看订单</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="header-contact media">
+                                        <div class="header-contact-icon mr-4">
+                                            <i class="pe-7s-headphones"></i>
+                                        </div>
+                                        <div class="header-contact-content media-body">
+                                            <p><span>联系我们:</span> <br><a href="#">+88 123.456.789</a></p>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of header-cart-area -->
+                            </div>
+                        </div>
+                    </div> <!-- end of bottom-header -->
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of header-area -->
+
+</header>
+
+
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        //在搜索类型选择标签中获取产品类型
+        $.ajax({
+            url: "/components/queryProductType.do",
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                let html = "<option></option>";
+                $.each(data, function (i, e) {
+                    html += "<option value=\'" + e.value + "\'>" + e.text + "</option>";
+                })
+                $("#select").append(html);
+            }
+        })
+
+        //重置搜索栏
+        $("#searchText").val("");
+
+        //搜索栏发起搜索
+        $("#searchBtn").click(function () {
+            let selectType = $("#select").val();
+            let searchText = $.trim($("#searchText").val());
+            let max_price = $("#max_price");
+            let min_price = $("#min_price");
+            if (max_price.length > 0 && min_price.length > 0) {
+                max_price = max_price.val().substring(1);
+                min_price = min_price.val().substring(1);
+            } else {
+                max_price = "";
+                min_price = "";
+            }
+            window.location.href = "/components/queryProductListBySearch.do?searchText=" + searchText + "&selectType=" + selectType +
+                "&maxPrice=" + max_price + "&minPrice=" + min_price;
+        })
+    })
+</script>
+
+
+</body>
+</html>

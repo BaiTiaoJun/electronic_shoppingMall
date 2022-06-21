@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!-- 指定连接数据库的JDBC驱动包所在位置，指定到你本机的完整路径 -->
+    <classPathEntry location="/Users/baitiaojun/java后端学习/maven/repository/mysql/mysql-connector-java/8.0.26/mysql-connector-java-8.0.26.jar"/>
+
+    <!-- 配置table表信息内容体，targetRuntime指定采用MyBatis3的版本 -->
+    <context id="tables" targetRuntime="MyBatis3">
+
+        <!-- 抑制生成注释，由于生成的注释都是英文的，可以不让它生成 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 配置数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/electronic_shoppingmall"
+                        userId="root"
+                        password="zhangshun">
+        </jdbcConnection>
+
+<!--         生成model类，targetPackage指定model类的包名， targetProject指定生成的model放在eclipse的哪个工程下面-->
+        <javaModelGenerator targetPackage="com.example.domain"
+                            targetProject="/Users/baitiaojun/学校课程/J2EE课堂作业/综合实验/ 项目源码/electronic_shoppingMall/shoppingMall_provider/src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="false" />
+        </javaModelGenerator>
+
+        <!-- 生成MyBatis的Mapper.xml文件，targetPackage指定mapper.xml文件的包名， targetProject指定生成的mapper.xml放在eclipse的哪个工程下面 -->
+        <sqlMapGenerator targetPackage="com.example.mapper"
+                         targetProject="/Users/baitiaojun/学校课程/J2EE课堂作业/综合实验/ 项目源码/electronic_shoppingMall/shoppingMall_provider/src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- 生成MyBatis的Mapper接口类文件,targetPackage指定Mapper接口类的包名， targetProject指定生成的Mapper接口放在eclipse的哪个工程下面 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper"
+                             targetProject="/Users/baitiaojun/学校课程/J2EE课堂作业/综合实验/ 项目源码/electronic_shoppingMall/shoppingMall_provider/src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 数据库表名及对应的Java模型类名 -->
+<!--        <table tableName="tbl_address" domainObjectName="Address"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_cart" domainObjectName="Cart"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+
+<!--        <table tableName="tbl_computer" domainObjectName="Computer"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+
+<!--        <table tableName="tbl_dic_type" domainObjectName="DicType"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+
+<!--        <table tableName="tbl_dic_value" domainObjectName="DicValue"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+
+<!--        <table tableName="tbl_order" domainObjectName="Order"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_phone" domainObjectName="Phone"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_order" domainObjectName="Order"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_product_set_meal" domainObjectName="ProductSetMeal"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_product_cart_relation" domainObjectName="ProductCartRelation"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_product_series" domainObjectName="ProductSeries"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_television" domainObjectName="Television"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_user" domainObjectName="User"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--        <table tableName="tbl_user_address_relation" domainObjectName="UserAddressRelation"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"/>-->
+
+<!--            <table tableName="tbl_pay_order" domainObjectName="PayOrder"-->
+<!--                   enableCountByExample="false"-->
+<!--                   enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false"-->
+<!--                   enableSelectByExample="false"-->
+<!--                   selectByExampleQueryId="false"/>-->
+    </context>
+
+</generatorConfiguration>

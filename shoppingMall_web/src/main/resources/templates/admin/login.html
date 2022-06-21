@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+    <style>
+        .codeImg{
+            width: 80px;
+            height: 40px;
+            position: absolute;
+            right: 15px;
+            top: 0;
+        }
+
+        #loginException{
+            display:none;
+            color: black;
+            background: #fef2f2;
+            border: 1px solid #ff4400;
+            margin-bottom: 16px;
+            font-size: 36px;
+            padding-top: 5px;
+            padding-left: 5px;
+            height: 30px
+        }
+
+        .show {
+            width: 60px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Start of Whole Site Wrapper with mobile menu support -->
+    <div id="whole" class="whole-site-wrapper color-scheme-one">
+
+        <!-- Start of Header -->
+        <div th:include="components/header :: html"></div>
+        <!-- End of Header -->
+
+        <!-- Start of Breadcrumbs -->
+        <div class="breadcrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="/product/queryProductList.do">首页</a>
+                            <span class="breadcrumb-item active">登录页</span>
+                        </nav>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Breadcrumbs -->
+
+        <!-- Start of Main Content Wrapper -->
+        <div id="content" class="main-content-wrapper">
+            
+            <!-- Start of Login Wrapper -->
+            <div class="login-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <main id="primary" class="site-main">
+                                <div class="user-login">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                            <div class="section-title left-aligned with-border">
+                                                <h2>登录您的账户</h2>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end of row -->
+
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">
+                                            <div class="login-form mt-half">
+                                                <form action="#">
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label for="phoneNumber" class="col-12 col-sm-12 col-md-4 col-form-label">手机号码</label>
+                                                        <div class="col-12 col-sm-12 col-md-8">
+                                                            <div id="loginException" class="form-hint"></div>
+                                                            <input type="text" class="form-control" id="phoneNumber" placeholder="手机号码" required>
+                                                            <div id="phoneNumberErr" class="form-hint" style="display:none;color: red"></div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label for="password" class="col-12 col-sm-12 col-md-4 col-form-label">密码</label>
+                                                        <div class="col-12 col-sm-12 col-md-8">
+                                                            <input type="password" class="form-control" id="password" placeholder="密码" required>
+                                                            <button class="pass-show-btn show" type="button">显示</button>
+                                                            <div id="passwordErr" class="form-hint" style="display:none;z-index:90;color: red"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label for="messageCode" class="col-12 col-sm-12 col-md-4 col-form-label">验证码</label>
+                                                        <div class="col-12 col-sm-12 col-md-8">
+                                                            <input type="text" class="form-control col-md-8" id="messageCode"  placeholder="点击右侧图片可刷新" required>
+                                                            <img class="codeImg" alt="" id="imgCode" style="cursor:pointer;">
+                                                            <div id="messageCodeErr" class="form-hint" style="display:none;color: red"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="login-box mt-5 text-center">
+                                                        <p><a href="#">忘记密码?</a></p>
+                                                        <button type="button" class="default-btn tiny-btn mt-4" id="loginBtn">登录</button>
+                                                    </div>
+                                                    <div class="text-center mt-half pt-half top-bordered">
+                                                        <p>没有账户? <a th:href="@{/admin/toRegister.do}">创建新账户</a>.</p>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of user-login -->
+                            </main> <!-- end of #primary -->
+                        </div>
+                    </div> <!-- end of row -->
+                </div> <!-- end of container -->
+            </div>
+            <!-- End of Login Wrapper -->
+        </div>
+        <!-- End of Main Content Wrapper -->
+
+        <!-- Start of Footer -->
+        <div th:include="components/footer :: html"></div>
+        <!-- End of Footer -->
+
+        <!-- Start of Scroll to Top -->
+        <div id="to_top">
+            <i class="ion ion-ios-arrow-forward"></i>
+            <i class="ion ion-ios-arrow-forward"></i>
+        </div>
+        <!-- End of Scroll to Top -->
+    </div>
+    <!-- End of Whole Site Wrapper -->
+
+    <!-- jQuery JS -->
+    <script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+    <!-- Popper JS -->
+    <script th:src="@{/js/popper.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins.js}"></script>
+
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <script th:src="@{/js/showMessage.js}"></script>
+
+    <script>
+        let $phoneNumber = $("#phoneNumber");
+        let $password = $("#password");
+        let $messageCode = $("#messageCode");
+
+
+        $(function () {
+            $phoneNumber.val("");
+            $password.val("");
+            $messageCode.val("");
+
+            $phoneNumber.focus();
+
+            loadImageCode();
+
+            // $email.blur(function () {
+            //     let email = $email.val();
+            //     if (email === "") {
+            //         showError("email", "邮箱不能为空");
+            //         return false;
+            //     } else if (!/^([a-z0-9_\.-]+)@([\da-z\.]+)\.([a-z\.]{2,6})$/g.test(email)) {
+            //         showError("email", "邮箱格式错误");
+            //         return false;
+            //     } else {
+            //         hideError("email");
+            //     }
+            // })
+
+            $phoneNumber.blur(function () {
+                let phoneNumber = $phoneNumber.val();
+                if (phoneNumber === "") {
+                    showError("phoneNumber", "密码不能为空");
+                    return false;
+                } else if (!/^1[1-9]\d{9}$/.test(phoneNumber)) {
+                    showError("phoneNumber", "手机号码格式错误");
+                    return false;
+                } else {
+                    hideError("phoneNumber");
+                }
+            })
+
+            $password.blur(function () {
+                let password = $password.val();
+                if (password === "") {
+                    showError("password", "密码不能为空");
+                    return false;
+                } else if(password.length < 6 || password.length > 16) {
+                    showError("password", "密码必须是6到16位");
+                    return false;
+                } else if(!/^[0-9a-zA-Z]+$/.test(password)) {
+                    showError("password", "密码只可使用数字和大小写英文字母");
+                    return false;
+                } else if (!/^(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))[a-zA-Z0-9]*/.test(password)) {
+                    showError("password", "密码应同时包含英文和数字");
+                    return false;
+                } else {
+                    hideError("password");
+                }
+            })
+
+            $messageCode.blur(function () {
+                let messageCode = $messageCode.val();
+                if (messageCode === "") {
+                    showError("messageCode", "验证码不能为空");
+                    return false;
+                } else {
+                    hideError("messageCode");
+                }
+            })
+
+            $(document).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    login();
+                }
+            })
+
+            $("#loginBtn").click(function () {
+                login();
+            })
+
+            $("#imgCode").click(function () {
+                if ($("div[id='phoneNumberErr']").text() === "" && $("div[id='passwordErr']").text() === "") {
+                    loadImageCode();
+                }
+            })
+        })
+
+        function login() {
+            $phoneNumber.blur();
+            $password.blur();
+            $messageCode.blur();
+
+            if ($("div[id$='Err']").text() === "") {
+                let phoneNumber = $phoneNumber.val();
+                let password = $password.val();
+                let messageCode = $messageCode.val();
+
+                $.ajax({
+                    url: "/admin/login.do",
+                    data: {
+                        phoneNumber:phoneNumber,
+                        password:password,
+                        messageCode:messageCode
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.flag === true) {
+                            window.location.href = "/product/queryProductList.do";
+                        } else {
+                            showException("login",data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("登录异常，请稍后再试");
+                    }
+                })
+            }
+        }
+
+        function loadImageCode() {
+            $.ajax({
+                url: "/admin/loadImageCode.do",
+                dataType: "json",
+                type: "get",
+                success: function (data) {
+                    $("#imgCode").attr("src", data.message);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

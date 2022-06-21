@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.User">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="register_time" jdbcType="VARCHAR" property="registerTime" />
+    <result column="last_login_time" jdbcType="VARCHAR" property="lastLoginTime" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, username, password, name, gender, id_card, phone, email, address, type, register_time, 
+    last_login_time, image, birthday
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.User">
+    insert into tbl_user (uid, username, password, 
+      name, gender, id_card, 
+      phone, email, address, 
+      type, register_time, last_login_time, image, birthday
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{registerTime,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}
+      , #{birthday,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.User">
+    insert into tbl_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.User">
+    update tbl_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.User">
+    update tbl_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=VARCHAR}
+      image = #{image,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectUserByMap" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from tbl_user
+    where phone=#{phoneNumber} and password=#{password}
+  </select>
+
+  <select id="selectUserByUsername" parameterType="string" resultType="string">
+    select username
+    from tbl_user
+    where username=#{username}
+  </select>
+
+<!--  添加一条新用户-->
+  <insert id="insertUser" parameterType="map">
+    insert into tbl_user (uid, username, password, phone, type, register_time, last_login_time, image)
+    values (#{uid}, #{username}, #{password}, #{phoneNumber}, #{type}, #{registerTime}, #{lastLoginTime}, #{profile});
+  </insert>
+
+  <select id="selectUserByPhoneNumber" parameterType="string" resultType="string">
+    select phone
+    from tbl_user
+    where phone=#{phoneNumber}
+  </select>
+
+  <select id="selectUserByUid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_user
+    where uid=#{uid}
+  </select>
+
+<!--    更新用头像的名称-->
+  <update id="updateImageByUid" parameterType="string">
+    update tbl_user
+    set image = #{image}
+    where uid = #{uid}
+  </update>
+</mapper>

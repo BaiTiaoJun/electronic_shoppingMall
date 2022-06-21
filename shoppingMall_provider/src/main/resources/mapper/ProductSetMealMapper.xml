@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductSetMealMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.ProductSetMeal">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="set_meal" jdbcType="VARCHAR" property="setMeal" />
+    <result column="pid" jdbcType="VARCHAR" property="pid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, set_meal, pid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_set_meal
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_product_set_meal
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.ProductSetMeal">
+    insert into tbl_product_set_meal (sid, set_meal, pid
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{setMeal,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.ProductSetMeal">
+    insert into tbl_product_set_meal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="setMeal != null">
+        set_meal,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="setMeal != null">
+        #{setMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.ProductSetMeal">
+    update tbl_product_set_meal
+    <set>
+      <if test="setMeal != null">
+        set_meal = #{setMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.ProductSetMeal">
+    update tbl_product_set_meal
+    set set_meal = #{setMeal,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product_set_meal
+    where pid=#{pid}
+  </select>
+</mapper>

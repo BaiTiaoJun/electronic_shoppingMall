@@ -1,0 +1,45 @@
+#    消费者的端口和上下文根
+server:
+  port: 8081
+  servlet:
+    context-path: /
+#    配置字符过滤器为UTF-8
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+#    session过期时间：24小时
+    session:
+      timeout: PT24H
+#        配置cookie的名字
+#      cookie:
+#        name: code
+
+#    配置dubbo的名称和注册中心地址
+dubbo:
+  application:
+    name: shoppingMall-web
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+    timeout: 15000
+    check: false
+
+#     配置thymeleaf的缓存机制，使用字符集名，类型
+spring:
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+#    thymeleaf视图解析器，可不定义
+    prefix: classpath:/templates/
+    suffix: .html
+#    配置redis的地址和端口
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+
+

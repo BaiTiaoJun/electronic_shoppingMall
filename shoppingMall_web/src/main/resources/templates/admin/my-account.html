@@ -1,0 +1,602 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+
+    <!-- CSS files
+============================================ -->
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <!--必要样式-->
+    <link href="http://hovertree.com/texiao/bootstrap/4/css/city-picker.css" rel="stylesheet" type="text/css" />
+
+    <!-- modernizr JS
+============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <style>
+        .cl-re {
+            color: red;
+        }
+
+        .cl-00 {
+            color: #00aaf0;
+        }
+
+        .form-address {
+            display: none;
+        }
+
+        .group {
+            position: absolute;
+            right: 80px;
+        }
+
+        .btn1 {
+            line-height: 40px;
+            height: 40px;
+            position: relative;
+            top: -12px;
+        }
+
+        .contact-info {
+            display: flex;
+        }
+
+        .single-info a img:hover {
+            background-color: rgba(180, 184, 181, 0.7)
+        }
+
+        .name-position {
+            margin-left: 110px;
+            font-size: 16px;
+            color: #ec610a;
+        }
+        .editProfile-item{
+            width: 300px;
+            cursor: pointer;
+            margin: auto;
+            height: 300px;
+        }
+        .editProfile-item >img{
+            border-radius: 10px;
+        }
+        .n-uploadImgBtn{
+            position: relative;
+        }
+        .n-uploadImgBtn>img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .n-uploadImgBtn:hover>div{
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .n-uploadImgBtn>div{
+            width: 100%;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.5s;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .profile {
+            overflow: hidden;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-size: cover;
+            position: absolute;
+            top: 4px;
+            left: 31px;
+            cursor: pointer;
+        }
+
+        .position-width {
+            width: 50px !important;
+        }
+
+        .order-line {
+            line-height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+<![endif]-->
+
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
+
+    <!-- Start of Header -->
+    <div th:include="components/header :: html"></div>
+    <!-- End of Header -->
+
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" th:href="@{/product/queryProductList.do}">首页</a>
+                        <span class="breadcrumb-item active">个人中心</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <div id="content" class="main-content-wrapper">
+
+        <!-- Start of My Account Wrapper -->
+        <div class="my-account-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <main id="primary" class="site-main">
+                            <div class="user-dashboard">
+                                <div class="user-info">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                                            <div class="single-info">
+                                                <!--头像-->
+                                                <div  id="openImageEditModel" class="n-uploadImgBtn profile" >
+                                                    <img  th:src="|@{http://124.222.122.45/}${user.image}|" id="profile">
+                                                    <div>编辑</div>
+                                                </div>
+                                                <span th:text="${user.name}"></span>
+                                                <span class="name-position" th:text="${user.username}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-6">
+                                            <div class="single-info contact-info">
+                                                <div>
+                                                    <p th:text="|联系电话：${user.phone}|"></p>
+                                                    <br />
+                                                    <div th:if="${user.email ne null}">
+                                                        <p th:text="|联系邮箱：${user.email}|"></p>
+                                                    </div>
+                                                    <div th:if="${user.email eq null}">
+                                                        <p>联系邮箱：</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-3">
+                                            <div class="single-info text-lg-center">
+                                                <a class="btn btn-secondary bge6" th:href="@{/admin/queryCart.do}">我的购物车</a>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end of row -->
+                                </div> <!-- end of user-info -->
+
+                                <div class="main-dashboard" style="min-height: 500px">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-2">
+                                            <ul class="nav flex-column dashboard-list" role="orders">
+
+                                                <li> <a class="nav-link active show" data-toggle="tab"
+                                                        href="#orders">订单记录</a></li>
+
+                                                <li><a class="nav-link" data-toggle="tab"
+                                                       href="#address">地址管理</a></li>
+                                                <li><a class="nav-link" data-toggle="tab"
+                                                       href="#account-details">实名认证</a></li>
+                                                <li><a class="nav-link" th:href="@{/admin/loginOut.do}">注销</a>
+                                                </li>
+                                            </ul> <!-- end of dashboard-list -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+                                            <!-- Tab panes -->
+                                            <div class="tab-content dashboard-content">
+
+                                                <div id="orders" class="tab-pane fade active show">
+                                                    <h3>订单</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>图片</th>
+                                                                    <th>订单编号</th>
+                                                                    <th>创建日期</th>
+                                                                    <th>订单状态</th>
+                                                                    <th>支付金额</th>
+                                                                </tr>
+                                                            </thead>
+                                                                <tbody class="order-line">
+                                                                    <tr>
+                                                                    <td><a href="#"><img th:src="@{/images/about/unlogin-profile.jpg}" width="50" alt="" style="border-radius: 0.4rem;"></a></td>
+                                                                    <td>11212121</td>
+                                                                    <td>September 10, 2018</td>
+                                                                    <td>Processing</td>
+                                                                    <td>$25.00 for 1 item </td>
+                                                                    <td><a class="btn btn-secondary bge6" href="cart.html">评价</a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> <!-- end of tab-pane -->
+
+                                                <div id="address" class="tab-pane">
+                                                    <div class="addressList">
+                                                        <div class="btn btn-secondary bge6 butaddress">添加收货地址
+                                                        </div>
+
+                                                        <div class="mt-5 form-row">
+                                                            <div>重庆市江北区xxxx说</div>
+                                                            <div class="group">
+                                                                <button class="cl-re cp btn1">删除</button>
+                                                                <button class="cl-00 cp btn1">编辑</button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-5 form-row">
+                                                            <div>重庆市江北区xxxx说</div>
+                                                            <div class="group">
+                                                                <button class="cl-re cp btn1">删除</button>
+                                                                <button class="cl-00 cp btn1">编辑</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-address">
+                                                        <div class="login-form mt-3">
+                                                            <form action="#">
+
+                                                                <div class="form-group row">
+                                                                    <label for="f-name"
+                                                                           class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">选择地址</label>
+                                                                    <div
+                                                                            class="col-12 col-sm-12 col-md-8 col-lg-6 ">
+                                                                        <div id="distpicker">
+                                                                            <div>
+                                                                                <div
+                                                                                        style="position: relative;">
+                                                                                    <input id="city-picker3"
+                                                                                           class="form-control"
+                                                                                           readonly type="text"
+                                                                                           value=""
+                                                                                           data-toggle="city-picker">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="l-name"
+                                                                           class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">详细地址</label>
+                                                                    <div
+                                                                            class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                        <input type="text" class="form-control"
+                                                                               id="l-address" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="email"
+                                                                           class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">邮编</label>
+                                                                    <div
+                                                                            class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                        <input type="text" class="form-control"
+                                                                               id="emails" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label f
+                                                                           class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">收件人姓名</label>
+                                                                    <div
+                                                                            class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                        <input type="text" class="form-control"
+                                                                               id="name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label
+                                                                           class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">收件人号码</label>
+                                                                    <div
+                                                                            class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                        <input type="text" class="form-control"
+                                                                               id="receivePhone" required>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div
+                                                                        class="register-box d-flex justify-content-end mt-half">
+                                                                    <button type="button"
+                                                                            class="btn btn-secondary blackList">取消</button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-secondary bge6 ml-3">提交</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </div> <!-- end of tab-pane -->
+
+                                                <div id="account-details" class="tab-pane fade">
+                                                    <h3>实名认证 </h3>
+                                                    <div class="login-form">
+                                                        <form action="#">
+
+                                                            <div class="form-group row">
+                                                                <label for="f-name"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">真实姓名</label>
+                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                    <input type="text" class="form-control"
+                                                                           id="f-name" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="l-name"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">身份证号码</label>
+                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                    <input type="text" class="form-control"
+                                                                           id="l-name" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="email"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">邮箱</label>
+                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                    <input type="text" class="form-control"
+                                                                           id="email" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="birth"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">出身年月</label>
+                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                    <input type="text" class="form-control"
+                                                                           id="birth" placeholder="MM / DD / YYYY"
+                                                                           required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="phone"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">电话号码</label>
+                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                                    <input type="text" class="form-control"
+                                                                           id="phone" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="phone"
+                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">验证码</label>
+                                                                <div class="col-8 col-sm-8 col-md-4 col-lg-4">
+                                                                    <input type="text" class="form-control"
+                                                                           id="verifyCode" required>
+                                                                </div>
+                                                                <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                                                                    <image src="#" class="form-control"
+                                                                           id="verifyCodeImg" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-check row p-0 mt-4">
+                                                                <div
+                                                                        class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">
+                                                                    <div class="custom-checkbox">
+                                                                        <input class="form-check-input"
+                                                                               type="checkbox" id="subscribe"
+                                                                               required>
+                                                                        <span class="checkmark"></span>
+                                                                        <label class="form-check-label"
+                                                                               for="subscribe">Sign up for our
+                                                                            newsletter<br>Subscribe to our
+                                                                            newsletters now and stay up-to-date
+                                                                            with new collections, the latest
+                                                                            lookbooks and exclusive
+                                                                            offers..</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                    class="register-box d-flex justify-content-end mt-half">
+                                                                <button type="submit"
+                                                                        class="btn btn-secondary bge6">提交</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div> <!-- end of tab-pane -->
+                                            </div>
+                                        </div>
+                                    </div> <!-- end of row -->
+                                </div> <!-- end of main-dashboard -->
+                            </div> <!-- end of user-dashboard -->
+                        </main> <!-- end of #primary -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of My Account Wrapper -->
+
+        <!-- 编辑头像的模态窗口-->
+        <div class="modal fade" id="editProfileModel" tabindex="-1">
+            <div class="modal-dialog" style="margin: 160px auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close position-width" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div  class=" n-uploadImgBtn  editProfile-item" id="imageContent"></div>
+                        <input type="file" style="display: none;" onchange="editProfile()" id="editProfile-upload" name="profile"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="saveProfileBtn">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End of Main Content Wrapper -->
+
+    <!-- Start of Footer -->
+    <div th:include="components/footer :: html"></div>
+    <!-- End of Footer -->
+
+    <!-- Start of Scroll to Top -->
+    <div id="to_top">
+        <i class="ion ion-ios-arrow-forward"></i>
+        <i class="ion ion-ios-arrow-forward"></i>
+    </div>
+    <!-- End of Scroll to Top -->
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+<script src="http://hovertree.com/texiao/bootstrap/4/js/city-picker.data.js"></script>
+
+<script src="http://hovertree.com/texiao/bootstrap/4/js/city-picker.js"></script>
+
+<script th:src="@{/js/ajaxfileupload.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    $(".butaddress").click(function() {
+        $(".form-address").show()
+        $(".addressList").hide()
+    })
+    $(".blackList").click(function() {
+        $(".form-address").hide()
+        $(".addressList").show()
+    })
+
+    $("#openImageEditModel").click(function() {
+        //打开模态窗口初始化为用户当前头像
+        $("#imageContent").empty();
+        //新建img标签对象
+        let $img = $("<img>");
+        let $div = $("<div></div>");
+        $img.attr("src", "http://124.222.122.45/" + [[${user.image}]]);
+        $div.text("点击上传");
+        $("#imageContent").append($img).append($div);
+
+        // 打开弹窗
+        $("#editProfileModel").modal("show");
+    })
+
+    let $editProfileUpload = $('#editProfile-upload');
+    let flag = false;
+    
+    $('.editProfile-item').click(function(){
+        $editProfileUpload[0].click();
+    })
+
+    function editProfile(){
+        console.log("测试")
+        $.ajaxFileUpload({
+            url: "/admin/uploadProfile.do",
+            fileElementId: "editProfile-upload",
+            dataType: "content",
+            type: "post",
+            secureuri: false,
+            success: function (data) {
+                if (data.flag === true) {
+                    //删除img标签
+                    $("#imageContent").empty();
+                    //新建img标签对象
+                    let $img = $("<img>");
+                    let $div = $("<div></div>");
+                    //从七牛云获取上传的图片
+                    console.log(data.fileName)
+                    $img.attr("src", "http://124.222.122.45/" + data.fileName);
+                    $div.text("点击上传");
+                    $("#imageContent").append($img).append($div);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("图片上传异常");
+            }
+        })
+    }
+
+    $("#saveProfileBtn").click(function () {
+        $.ajax({
+            url: "/admin/saveProfile.do",
+            data: {
+                uid: [[${user.uid}]]
+            },
+            type: "post",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.flag === true) {
+                    $("#editProfileModel").modal("hide");
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("头像保存异常");
+            }
+        })
+    })
+</script>
+</body>
+</html>

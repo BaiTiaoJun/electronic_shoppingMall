@@ -1,0 +1,663 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- CSS files
+    ============================================ -->
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <style type="text/css">
+        .arrow-icon {
+            margin-top: 7px !important;
+        }
+    </style>
+
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+</head>
+
+<body>
+
+
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Start of Whole Site Wrapper with mobile menu support -->
+    <div id="whole" class="whole-site-wrapper color-scheme-one">
+
+        <!-- Start of Header -->
+        <div th:include="components/header :: html"></div>
+        <!-- End of Header -->
+
+        <!-- Start of Breadcrumbs -->
+        <div class="breadcrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" th:href="@{/product/queryProductList.do}">首页</a>
+                            <span class="breadcrumb-item active" >商品页</span>
+                        </nav>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Breadcrumbs -->
+
+        <!-- Start of Main Content Wrapper -->
+        <div id="content" class="main-content-wrapper">
+            
+            <!-- Start of Shop Products Wrapper -->
+            <div class="shop-products-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-9 order-1 order-md-1 order-lg-2">
+                            <main id="primary" class="site-main">
+                                <div class="shop-wrapper">
+                                   <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                            <div class="shop-toolbar">
+                                                <div class="toolbar-inner">
+                                                    <div class="product-view-mode">
+                                                        <ul role="tablist" class="nav shop-item-filter-list">
+                                                            <li role="presentation" class="active"><a href="#grid" aria-controls="grid" role="tab" data-toggle="tab" class="active show" aria-selected="true"><i class="ion-md-grid"></i></a></li>
+                                                            <li role="presentation"><a href="#list" aria-controls="list" role="tab" data-toggle="tab"><i class="ion-md-list"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    page-link  <div class="toolbar-amount">
+                                                        <span>Showing 10 to 18 of 27</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-select-box">
+                                                    <div class="product-show">
+                                                        <p>Show:</p>
+                                                        <select class="nice-select" name="showing" id="selectSize">
+                                                            <option value="8">8</option>
+                                                            <option value="12">12</option>
+                                                            <option value="16">16</option>
+                                                            <option value="20">20</option>
+                                                            <option value="24">24</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="product-sort">
+                                                        <p>Sort By:</p>
+                                                        <select class="nice-select" name="sortby">
+                                                            <option value="trending">Default</option>
+                                                            <option value="sales">Name (A - Z)</option>
+                                                            <option value="sales">Name (Z - A)</option>
+                                                            <option value="rating">Price (Low > High)</option>
+                                                            <option value="date">Rating (Lowest)</option>
+                                                            <option value="price-asc">Model (A - Z)</option>
+                                                            <option value="price-asc">Model (Z - A)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end of row -->
+
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                            <div class="shop-products-wrapper" id="products-wrapper">
+                                                <div class="tab-content">
+
+                                                    <div id="grid" class="tab-pane fade active show" role="tabpanel">
+                                                        <div class="row">
+                                                        <!--网格展示商品信息-->
+                                                            <div class="product-layout product-grid col-6 col-sm-6 col-md-4 col-lg-4" th:each="product:${responseResultVo.list}">
+                                                                <div class="product-thumb">
+                                                                    <div class="product-inner" th:productId="${product.pid}" >
+                                                                        <div class="product-image">
+                                                                            <div class="label-product label-new" th:if="${product.createTime} eq ${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">New</div>
+                                                                            <a th:href="|@{/product/toSingleProduct.do}?pid=${product.pid}|">
+                                                                                <img th:src="|@{http://124.222.122.45/}${product.image}|" alt="Proin Lectus Ipsum" class="hover-image">
+                                                                                <img th:src="|@{http://124.222.122.45/}${product.imageTransform}|" alt="Proin Lectus Ipsum" title="Proin Lectus Ipsum">
+                                                                            </a>
+                                                                        </div> <!-- end of product-image -->
+
+                                                                        <div class="product-caption">
+                                                                            <div class="product-ratings">
+                                                                                <div class="rating-box">
+                                                                                    <ul class="rating d-flex" th:if="${product.score} eq '20'">
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    </ul>
+                                                                                    <ul class="rating d-flex" th:if="${product.score} eq '40'">
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    </ul>
+                                                                                    <ul class="rating d-flex" th:if="${product.score} eq '60'">
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    </ul>
+                                                                                    <ul class="rating d-flex" th:if="${product.score} eq '80'">
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    </ul>
+                                                                                    <ul class="rating d-flex" th:if="${product.score} eq '100'">
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <h4 class="product-name"><a href="single-product.html" th:text="${product.name}"></a></h4>
+                                                                            <p class="product-price">
+                                                                                <span class="price-old" th:text="${product.oldPrice}"></span>
+                                                                                <span class="price-new" th:text="${#numbers.formatCurrency(product.newPrice)}"></span>
+                                                                            </p>
+                                                                        </div><!-- end of product-caption -->
+                                                                    </div><!-- end of product-inner -->
+                                                                </div><!-- end of product-thumb -->
+                                                            </div> <!-- end of product-layout -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="list" class="tab-pane fade" role="tabpanel">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-12 col-md-12">
+                                                        <!--列表展示商品信息 -->
+                                                                <div class="product-layout product-list" th:each="product:${responseResultVo.list}">
+                                                                    <div class="product-thumb">
+                                                                        <div class="product-inner media align-items-center">
+                                                                            <div class="product-image mb-4 mb-md-0 mr-md-4 mr-xl-5">
+                                                                                <div class="label-product label-new" th:if="${product.createTime} eq ${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">New</div>
+                                                                                <a th:href="|@{/product/toSingleProduct.do}?pid=${product.pid}|">
+                                                                                    <img th:src="|@{http://124.222.122.45/}${product.image}|" alt="Proin Lectus Ipsum" class="hover-image">
+                                                                                    <img th:src="|@{http://124.222.122.45/}${product.imageTransform}|" alt="Proin Lectus Ipsum" title="Proin Lectus Ipsum">
+                                                                                </a>
+                                                                                <div class="action-links">
+                                                                                    <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-cart"></i></a>
+                                                                                    <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                                                    <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                                                    <a class="action-btn btn-quickview" data-toggle="modal" data-target="#product_quick_view" href="#" title="Quick View"><i class="pe-7s-search"></i></a>
+                                                                                </div>
+                                                                            </div> <!-- end of product-image -->
+
+                                                                            <div class="product-caption media-body">
+                                                                                <div class="product-ratings">
+                                                                                    <div class="rating-box">
+                                                                                        <ul class="rating d-flex justify-content-md-start" th:if="${product.score} eq '20'">
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                        </ul>
+                                                                                        <ul class="rating d-flex justify-content-md-start" th:if="${product.score} eq '40'">
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                        </ul>
+                                                                                        <ul class="rating d-flex justify-content-md-start" th:if="${product.score} eq '60'">
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                        </ul>
+                                                                                        <ul class="rating d-flex justify-content-md-start" th:if="${product.score} eq '80'">
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                        </ul>
+                                                                                        <ul class="rating d-flex justify-content-md-start" th:if="${product.score} eq '100'">
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                            <li><i class="fa fa-star"></i></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <h4 class="product-name"><a href="single-product.html" th:text="${product.name}"></a></h4>
+                                                                                <p class="product-price">
+                                                                                    <span class="price-old" th:text="${product.oldPrice}"></span>
+                                                                                    <span class="price-new" th:text="${product.newPrice}"></span>
+                                                                                </p>
+                                                                                <p class="product-des" th:text="${product.description}"></p>
+                                                                            </div><!-- end of product-caption -->
+                                                                        </div><!-- end of product-inner -->
+                                                                    </div><!-- end of product-thumb -->
+                                                                </div> <!-- end of product-layout -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end of shop-products-wrapper -->
+
+                                            <div class="pagination-area">
+                                                <div class="row align-items-center">
+
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <ul class="pagination" th:if="${responseResultVo.pageInfo.pages gt 0}">
+                                                            <li class="page-item"><a class="page-link splitPageDoublePre"><i class="fa fa-angle-double-left arrow-icon"></i></a></li>
+                                                            <li class="page-item"><a class="page-link splitPageArrow" th:value="${responseResultVo.pageInfo.prePage}"><i class="fa fa-angle-left arrow-icon"></i></a></li>
+                                                            <div th:each="page:${#numbers.sequence(1, responseResultVo.pageInfo.pages)}">
+                                                                <div th:if="${responseResultVo.pageInfo.pageNum eq page}">
+                                                                    <li class="page-item active">
+                                                                        <span class="page-link" th:text="${pageStat.index + 1}"></span>
+                                                                    </li>
+                                                                </div>
+                                                                <div th:if="${responseResultVo.pageInfo.pageNum ne page}">
+                                                                    <li class="page-item">
+                                                                        <a class="page-link splitPage" th:text="${pageStat.index + 1}" ></a>
+                                                                    </li>
+                                                                </div>
+                                                            </div>
+                                                            <li class="page-item"><a class="page-link splitPageArrow" th:value="${responseResultVo.pageInfo.nextPage}"><i class="fa fa-angle-right arrow-icon"></i></a></li>
+                                                            <li class="page-item"><a class="page-link splitPageDoubleNext"><i class="fa fa-angle-double-right arrow-icon"></i></a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <span class="page-amount d-flex" >
+                                                            <p th:text="|展示&nbsp;${responseResultVo.pageInfo.startRow}&nbsp;到&nbsp;${responseResultVo.pageInfo.endRow}&nbsp;共&nbsp;${responseResultVo.pageInfo.total}&nbsp;(${responseResultVo.pageInfo.pages}&nbsp;页)|"></p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end of pagination-area -->
+                                        </div>
+                                    </div> <!-- end of row -->
+                                </div> <!-- end of shop-wrapper -->
+                            </main> <!-- end of #primary -->
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-3 order-2 order-md-2 order-lg-1">
+                            <aside id="secondary" class="widget-area">
+                                <div class="sidebar-widget price-filter-widget">
+                                    <h2 class="widgettitle">价格</h2>
+                                    <div class="filter-price-content">
+                                        <form action="#" method="post">
+                                            <div id="price_slider" class="price-slider"></div>
+                                            <div class="filter-price-wrapper">
+                                                <div class="filter-content">
+                                                    <div class="input-type">
+                                                        <input type="text" id="min_price" readonly=""/>
+                                                    </div>
+                                                    <span>—</span>
+                                                    <div class="input-type">
+                                                        <input type="text" id="max_price" readonly=""/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>  
+                                    </div>
+                                </div> <!-- end of sidebar-widget -->
+
+                                <div class="sidebar-widget list-widget">
+                                    <h2 class="widgettitle">Category</h2>
+                                    <div class="list-widget-wrapper">
+                                        <div class="list-group">
+                                            <a href="#">Laptop (198)</a>
+                                            <a href="#">Mobile (70)</a>
+                                            <a href="#">Accessories (14)</a>
+                                            <a href="#">Dresses (10)</a>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of sidebar-widget -->
+
+                            </aside> <!-- end of #secondary -->
+                        </div>
+                    </div> <!-- end of row -->
+                </div> <!-- end of container -->
+            </div>
+            <!-- End of Shop Products Wrapper -->
+        </div>
+        <!-- End of Main Content Wrapper -->
+
+        <!-- Start of Footer -->
+        <div th:include="components/footer :: html"></div>
+        <!-- End of Footer -->
+
+        <!-- Quick View Content Start -->
+        <div class="product-quick-view">
+            <div class="container">
+                <!-- Start of Modal -->
+                <div class="modal fade" id="product_quick_view">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div> <!-- end of modal-header -->
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="product-gallery">
+                                            <div class="gallery-with-thumbs">
+                                                <div class="product-full-image main-slider image-popup">
+
+                                                    <!-- Slides -->
+                                                    <div class="swiper-wrapper">
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-1.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-1.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-2.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-2.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-3.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-3.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-4.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-4.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-5.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-5.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                        <figure class="swiper-slide">
+                                                            <a th:href="@{/images/products/single/product-6.jpg}" data-size="800x800">
+                                                                <img th:src="@{/images/products/single/product-6.jpg}" alt="Product Image">
+                                                                <div class="image-overlay"><i class="pe-7s-expand1"></i></div>
+                                                            </a>
+                                                            <figcaption class="visually-hidden">
+                                                                <span>Product Image</span>
+                                                            </figcaption>
+                                                        </figure>
+                                                    </div>
+                                                </div> <!-- end of product-full-image -->
+
+                                                <div class="product-thumb-image pos-r">
+                                                    <div class="nav-slider">
+                                                        <!-- Slides -->
+                                                        <div class="swiper-wrapper">
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-1.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-2.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-3.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-4.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-5.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                            <div class="swiper-slide">
+                                                                <img th:src="@{/images/products/single/product-thumb-6.jpg}" alt="Product Thumbnail Image">
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Navigation -->
+                                                        <div class="swiper-arrow next"><i class="fa fa-angle-right"></i></div>
+                                                        <div class="swiper-arrow prev"><i class="fa fa-angle-left"></i></div>
+                                                    </div>
+                                                </div> <!-- end of product-thumb-image -->
+                                            </div> <!-- end of gallery-with-thumbs -->
+                                        </div> <!-- end of product-gallery -->
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="product-details">
+                                            <h3 class="product-name">Cas Meque Metus</h3>
+                                            <div class="product-ratings">
+                                                <ul class="rating d-flex">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-price">
+                                                <p class="d-flex align-items-center">
+                                                    <span class="price-old">16.51</span>
+                                                    <span class="price-new">$15.19</span>
+                                                    <span class="price-discount">-5%</span>
+                                                </p>
+                                            </div>
+                                            <div class="product-description">
+                                                <p>The best is yet to come! Give your walls a voice with a framed poster. This aesthethic, optimistic poster will look great in your desk or in an open-space office. Painted wooden frame with passe-partout for more depth.</p>
+                                            </div>
+                                            <div class="product-actions">
+                                                <h3>Available Options</h3>
+                                                <div class="product-size clearfix">
+                                                    <label>Size</label>
+                                                    <select class="nice-select">
+                                                        <option>S</option>
+                                                        <option>M</option>
+                                                        <option>L</option>
+                                                    </select>
+                                                </div>
+                                                <div class="product-color clearfix">
+                                                    <label>color</label>
+                                                    <ul class="color-list">
+                                                       <li>
+                                                            <a class="white" href="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="orange active" href="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="paste" href="#"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product-stock">
+                                                   <label>Quantity</label>
+                                                    <ul class="d-flex flex-wrap align-items-center">
+                                                        <li class="box-quantity">
+                                                            <form action="#">
+                                                                <input class="quantity" type="number" min="1" value="1">
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" class="default-btn">Add to Cart</button>
+                                                        </li>
+                                                        <li class="product-availability">
+                                                            <p><span class="in-stock"><i class="ion ion-md-checkmark-circle-outline"></i> in stock</span></p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="wishlist-compare">
+                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>
+                                                    <button class="btn-compare" type="button" title="Add to Compare">Add to Compare</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end of product-details -->
+                                    </div>
+                                </div> <!-- end of row -->
+                            </div> <!-- end of modal-body -->
+
+                            <div class="modal-footer justify-content-start">
+                                <div class="social-sharing d-flex align-items-center">
+                                    <span>Share</span>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item"><a href="#" class="bg-facebook" data-toggle="tooltip" data-position="top" data-original-title="Facebook" target="_blank"><i class="fa fa-facebook"></i><span>Share</span></a></li>
+                                        <li class="list-inline-item"><a href="#" class="bg-twitter" data-toggle="tooltip" data-position="top" data-original-title="Twitter" target="_blank"><i class="fa fa-twitter"></i><span>Tweet</span></a></li>
+                                        <li class="list-inline-item"><a href="#" class="bg-gplus" data-toggle="tooltip" data-position="top" data-original-title="Google Plus" target="_blank"><i class="fa fa-google-plus"></i><span>Google+</span></a></li>
+                                        <li class="list-inline-item"><a href="#" class="bg-pinterest" data-toggle="tooltip" data-position="top" data-original-title="Pinterest" target="_blank"><i class="fa fa-pinterest"></i><span>Pinterest</span></a></li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end of modal-footer -->
+                        </div> <!-- end of modal-content -->
+                    </div> <!-- end of modal-dialog -->
+                </div> <!-- end of modal -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- Quick View Content End -->
+
+        <!-- Start of Scroll to Top -->
+        <div id="to_top">
+            <i class="ion ion-ios-arrow-forward"></i>
+            <i class="ion ion-ios-arrow-forward"></i>
+        </div>
+        <!-- End of Scroll to Top -->
+    </div>
+    <!-- End of Whole Site Wrapper -->
+
+    <!-- Initializing Photoswipe -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Photoswipe -->
+
+    <!-- JS
+    ============================================ -->
+    <!-- jQuery JS -->
+    <script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+    <!-- Popper JS -->
+    <script th:src="@{/js/popper.min.js}"></script>
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins.js}"></script>
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            //保持每次同步刷新页面后始终是指定的每页显示条数
+            $("select option[value='[[${responseResultVo.pageInfo.pageSize}]]']").prop("selected", true);
+
+            //价格滑块，通过滑块调节改变价格搜索范围
+            let $priceRange = $("#price_slider");
+            if ($priceRange.elExists()) {
+                $priceRange.slider({
+                    range: true,
+                    min: 0,
+                    max: 20000,
+                    values: [ 0, 20000 ],
+                    slide: function( event, ui ) {
+                        $( "#min_price" ).val('¥' + ui.values[ 0 ] );
+                        $( "#max_price" ).val('¥' + ui.values[ 1 ] );
+                    }
+                });
+                $( "#min_price" ).val('¥' + $priceRange.slider( "values", 0 ));
+                $( "#max_price" ).val('¥' + $priceRange.slider( "values", 1 ));
+            }
+
+            //获取每页显示条数
+            let totalSize = $("#selectSize option:selected").text();
+            //指定每页显示条数8，12，16，20，24
+            $("#selectSize").change(function () {
+                let totalSize = $("#selectSize option:selected").text();
+                split(1, totalSize);
+            })
+            //根据卡片的选择获取text值控制翻页
+            $(".splitPage").click(function () {
+                let page = $(this).text();
+                split(page, totalSize);
+            })
+            //控制左右箭头的翻页
+            $(".splitPageArrow").click(function () {
+                let page = $(this).attr("value");
+                split(page,totalSize);
+            })
+        })
+        //分页函数
+        function split(page, totalSize) {
+            let selectType = [[${responseResultVo.selectType}]];
+            if (selectType === null) {
+                selectType = "";
+            }
+
+            let searchText = [[${responseResultVo.searchText}]];
+            if (searchText === null) {
+                searchText = "";
+            }
+
+            let max_price = [[${responseResultVo.maxPrice}]];
+            let min_price = [[${responseResultVo.minPrice}]];
+
+            if (max_price === null && min_price === null) {
+                max_price = $( "#max_price" ).val().substring(1);
+                min_price = $( "#min_price" ).val().substring(1);
+            }
+
+            window.location.href = "/product/queryProductListBySplitPage.do?searchText=" + searchText + "&selectType="
+                + selectType + "&currentPage=" + page + "&totalSize=" + totalSize + "&maxPrice=" + max_price + "&minPrice=" + min_price;
+        }
+    </script>
+</body>
+</html>

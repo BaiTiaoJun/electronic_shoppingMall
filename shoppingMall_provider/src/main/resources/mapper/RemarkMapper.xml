@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.RemarkMapper">
+    <resultMap id="BaseResultMap" type="com.example.domain.Remark">
+        <id column="rid" jdbcType="VARCHAR" property="rid" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="remark_time" jdbcType="VARCHAR" property="remarkTime" />
+        <result column="remark_by" jdbcType="VARCHAR" property="remarkBy" />
+        <result column="score" jdbcType="INTEGER" property="score" />
+    </resultMap>
+
+    <select id="selectRemarkCount" parameterType="string" resultType="int">
+        select count(content)
+        from tbl_product_remark
+        where pid=#{pid};
+    </select>
+
+    <select id="selectRemarkListById" parameterType="string" resultMap="BaseResultMap">
+        select rid, content, p.pid, remark_time, u.username as remark_by, score
+        from tbl_product_remark p
+        join tbl_user u on u.uid = p.remark_by
+        where pid=#{pid}
+    </select>
+</mapper>
+    

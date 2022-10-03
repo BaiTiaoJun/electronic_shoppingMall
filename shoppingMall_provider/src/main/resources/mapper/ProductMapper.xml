@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.Product">
+    <id column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="new_price" jdbcType="DOUBLE" property="newPrice" />
+    <result column="old_price" jdbcType="DOUBLE" property="oldPrice" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="image_transform" jdbcType="VARCHAR" property="imageTransform" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="series" jdbcType="VARCHAR" property="series" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="avaliable" jdbcType="VARCHAR" property="avaliable" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="detail_image" jdbcType="VARCHAR" property="detailImage" />
+    <result column="image_list" jdbcType="VARCHAR" property="imageList" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, name, new_price, old_price, type, image, image_transform, create_time, create_by, update_time,
+    update_by, series, detail_image, image_list
+  </sql>
+<!--  根据商品的id和类型查询单个商品信息-->
+  <select id="selectProductByPid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select pid, p.name, new_price, old_price, d.text as type, p.image, image_transform, create_time, u.username as create_by, update_time,
+                  u.username as update_by, s.name as series, p.description, s.score, s.avaliable, s.brand, detail_image, image_list
+    from tbl_product p
+    join tbl_dic_value d on p.type=d.id
+    join tbl_product_series s on p.series=s.sid
+    join tbl_user u on u.uid=p.create_by
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.Product">
+    insert into tbl_product (pid, name, new_price, old_price,
+      type, description, image, image_transform,
+      create_time, create_by, update_time, 
+      update_by, series, detailImage, image_list
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{new_price,jdbcType=DOUBLE}, #{old_price,jdbcType=DOUBLE},
+            #{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{image_transform,jdbcType=VARCHAR},
+            #{createTime,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},
+            #{updateBy,jdbcType=VARCHAR}, #{series,jdbcType=VARCHAR}, #{detailImage,jdbcType=VARCHAR}, #{imageList,jdbcType=VARCHAR}
+            )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.Product">
+    insert into tbl_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="newPrice != null">
+        new_price,
+      </if>
+      <if test="oldPrice != null">
+        old_price,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="image_transform != null">
+        imageTransform,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="series != null">
+        series,
+      </if>
+      <if test="detailImage != null">
+        detail_image
+      </if>
+      <if test="imageList != null">
+        image_list
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="newPrice != null">
+        #{new_price,jdbcType=DOUBLE},
+      </if>
+      <if test="oldPrice != null">
+        #{old_price,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="image_transform != null">
+        #{imageTransform,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="series != null">
+        #{series,jdbcType=VARCHAR},
+      </if>
+      <if test="detailImage != null">
+        #{detailImage,jdbcType=VARCHAR},
+      </if>
+      <if test="imageList != null">
+        #{imageList,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.Product">
+    update tbl_product
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="newPrice != null">
+        new_price = #{newPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="oldPrice != null">
+        old_price = #{oldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="imageTransform != null">
+        image_transform = #{imageTransform,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="series != null">
+        series = #{series,jdbcType=VARCHAR},
+      </if>
+      <if test="detailImage != null">
+        detail_image = #{detailImage,jdbcType=VARCHAR}
+      </if>
+      <if test="detailImage != null">
+        image_list = #{imageList,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.Product">
+    update tbl_product
+    set name = #{name,jdbcType=VARCHAR},
+      new_price = #{newPrice,jdbcType=DOUBLE},
+      old_price = #{oldPrice,jdbcType=DOUBLE},
+      type = #{type,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      image_transform = #{imageTransform,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      series = #{series,jdbcType=VARCHAR},
+      detail_image = #{detailImage,jdbcType=VARCHAR}
+      image_list = #{imageList,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+<!--  按照时间降序排序查找所有商品记录-->
+  <select id="selectProductList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product
+    order by create_time desc
+  </select>
+<!--  根据条件分页查询商品-->
+  <select id="selectProductListBySplitPageSearch" parameterType="map" resultMap="BaseResultMap">
+    select pid, p.name, new_price, old_price, d.text as type, p.image, image_transform, create_time, u.username as create_by, update_time,
+            u.username as update_by, s.name as series, s.score
+    from tbl_product p
+    join tbl_dic_value d on p.type=d.id
+    join tbl_product_series s on p.series=s.sid
+    join tbl_user u on u.uid=p.create_by
+    <where>
+    <choose>
+      <when test="selectType != null and selectType != '' and searchText != null and searchText != ''">
+        d.text like '%' #{selectType} '%' and p.name like '%' #{searchText} '%'
+      </when>
+      <when test="selectType != null and selectType != ''">
+        or d.text like '%' #{selectType} '%'
+      </when>
+      <when test="searchText != null and searchText != ''">
+        or p.name like '%' #{searchText} '%'
+      </when>
+    </choose>
+      <if test="maxPrice != null and maxPrice != '' or minPrice != null and minPrice != ''">
+        and new_price &lt; #{maxPrice} and new_price &gt; #{minPrice}
+      </if>
+    </where>
+    order by p.create_time desc
+  </select>
+<!--根据商品系列的名称查询相关商品的信息-->
+  <select id="selectProductListByType" resultType="string" resultMap="BaseResultMap">
+    select pid, p.name, new_price, p.image, image_transform, create_time, update_time
+    from tbl_product p
+    join tbl_dic_value d on p.type=d.id
+    where d.text = #{type,jdbcType=VARCHAR}
+  </select>
+<!--   加入购物车业务：根据pid查询单个商品的信息-->
+  <select id="selectSingleProductByPid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+
+<!--  根据商品系列id查询该id下的所有商品-->
+  <select id="selectProductBySid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product
+    where series = #{sid}
+  </select>
+
+  <select id="selectByPid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product
+    where pid = #{pid}
+  </select>
+
+  <delete id="deleteProductBySid" parameterType="string">
+    delete
+    from tbl_product
+    where series = #{sid}
+  </delete>
+
+  <select id="selectBySid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product
+    where series = #{sid}
+  </select>
+</mapper>

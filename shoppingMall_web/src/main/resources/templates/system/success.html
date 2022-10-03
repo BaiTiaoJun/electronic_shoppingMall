@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>淘淘乐</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="robots" content="noindex, follow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- CSS files
+    ============================================ R-->
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <style>
+        .box-right .member-head .head a {
+            width: 90px;
+            height: 90px;
+            display: inline-block;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            margin-left: -50px;
+            border-radius: 50%;
+        }
+
+        .box-right .member-head .head a img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+        }
+
+        .box-right .member-head p {
+            height: 17px;
+            line-height: 17px;
+            text-align: center;
+        }
+
+        .box-right .member-head p a {
+            display: inline-block;
+            width: 72px;
+            height: 17px;
+            border-radius: 6px;
+            background-color: #ffe4dc;
+            line-height: 17px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #f40;
+            padding-left: 20px;
+            padding-right: 8px;
+            position: relative;
+        }
+
+        .box-right .member-head p span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .box-right .member-foot a {
+            display: inline-block;
+            width: 110px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            color: #fff;
+            margin: 0 6px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 6px;
+            background: #0f2f6c;
+        }
+
+        /* 显示用户简单信息的样式 */
+        .box-right .member-foot ul {
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            font-size: 15px;
+        }
+
+        .box-right .member-foot ul li {
+            padding-left: 16px;
+        }
+
+        .box-right .member-foot ul span {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tip {
+            margin-left: 270px;
+            padding-top: 40px;
+            font-size: 30px;color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-two">
+
+    <div th:include="components/header :: html"></div>
+
+    <!-- Start of Main Content Wrapper -->
+    <main id="content" class="main-content-wrapper" style="margin-top:25px;">
+        <div style="height: 100px;background-color: #ffc300;">
+            <span>
+                <p class="tip" >支付成功！</p>
+            </span>
+        </div>
+    </main>
+    <!-- End of Main Content Wrapper -->
+
+    <div th:include="components/footer :: html"></div>
+
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- JS
+============================================ -->
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

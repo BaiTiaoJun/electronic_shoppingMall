@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.Order">
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="order_description" jdbcType="VARCHAR" property="orderDescription" />
+    <result column="total_number" jdbcType="INTEGER" property="totalNumber" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="purcharse_time" jdbcType="VARCHAR" property="purcharseTime" />
+    <result column="receive_time" jdbcType="VARCHAR" property="receiveTime" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="set_meal" jdbcType="VARCHAR" property="setMeal" />
+    <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    oid, create_time, create_by, order_description, total_number, total_price, purcharse_time,
+    receive_time, order_status, pay_status, sid, color, set_meal, pay_order_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.Order">
+    insert into tbl_order (oid, create_time,
+      create_by, order_description, total_number, 
+      total_price, purcharse_time, receive_time, 
+      order_status, pay_status, sid, 
+      color, set_meal, pay_order_no)
+    values (#{oid,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{orderDescription,jdbcType=VARCHAR}, #{totalNumber,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DOUBLE}, #{purcharseTime,jdbcType=VARCHAR}, #{receiveTime,jdbcType=VARCHAR}, 
+      #{orderStatus,jdbcType=VARCHAR}, #{payStatus,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, 
+      #{color,jdbcType=VARCHAR}, #{setMeal,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.Order">
+    insert into tbl_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="orderDescription != null">
+        order_description,
+      </if>
+      <if test="totalNumber != null">
+        total_number,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="purcharseTime != null">
+        purcharse_time,
+      </if>
+      <if test="receiveTime != null">
+        receive_time,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="setMeal != null">
+        set_meal,
+      </if>
+      <if test="payOrderNo != null">
+        pay_order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDescription != null">
+        #{orderDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNumber != null">
+        #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purcharseTime != null">
+        #{purcharseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="setMeal != null">
+        #{setMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.Order">
+    update tbl_order
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDescription != null">
+        order_description = #{orderDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNumber != null">
+        total_number = #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purcharseTime != null">
+        purcharse_time = #{purcharseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        receive_time = #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="setMeal != null">
+        set_meal = #{setMeal,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.Order">
+    update tbl_order
+    set create_time = #{createTime,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      order_description = #{orderDescription,jdbcType=VARCHAR},
+      total_number = #{totalNumber,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      purcharse_time = #{purcharseTime,jdbcType=VARCHAR},
+      receive_time = #{receiveTime,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      pay_status = #{payStatus,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      set_meal = #{setMeal,jdbcType=VARCHAR},
+      pay_order_no = #{payOrderNo,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectOrderByUid" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_order
+    where create_by = #{uid}
+  </select>
+
+  <select id="selectOrderListByUid" parameterType="string" resultMap="BaseResultMap">
+    select oid, create_time, create_by, order_description, total_number, total_price, purcharse_time,
+           receive_time, order_status, pay_status, o.sid, p.color as color, ps.set_meal as set_meal, pay_order_no
+    from tbl_order o
+    join tbl_product_color p on p.cid = o.color
+    join tbl_product_set_meal ps on ps.sid = o.set_meal
+    where create_by = #{uid}
+    order by create_time desc
+  </select>
+
+  <update id="updateByPayOrderNo" parameterType="com.example.domain.Order" useGeneratedKeys="false" keyProperty="sid">
+    update tbl_order
+    set pay_status = #{payStatus,jdbcType=VARCHAR},
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+        purcharse_time = #{purcharseTime,jdbcType=VARCHAR}
+    where pay_order_no = #{payOrderNo,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPayOrderNo" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_order
+    where pay_order_no = #{outOrderNo}
+  </select>
+
+  <select id="countOrdersByUid" parameterType="string" resultType="int">
+    select count(*)
+    from tbl_order
+    where create_by = #{uid}
+  </select>
+</mapper>

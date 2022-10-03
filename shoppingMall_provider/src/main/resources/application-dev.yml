@@ -1,0 +1,104 @@
+#    提供者的端口和上下文根
+server:
+  port: 8083
+  servlet:
+    context-path: /shoppingMall_provider
+
+#    配置数据库的数据源
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/electronic_shoppingmall?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      username: root
+      password: zhangshun
+#      开启druid监控中心
+      stat-view-servlet:
+        login-password: root
+        login-username: root
+        enabled: true
+        url-pattern: /druid/*
+#        设置白名单
+        allow: localhost
+      #      初始化连接池个数
+      initial-size: 3
+#      连接池最大数量
+      max-active: 17
+#      连接池最小数量
+      min-idle: 3
+#      最大等待时间
+      max-wait: 3000
+      #      filters: stat,wall,log4j
+      filter:
+#          开启SQL监控
+        stat:
+          enabled: true
+#          开启慢日志查询
+          log-slow-sql: true
+#          查询SQL时，超过1s，计算慢，将会记录进慢日志中
+          slow-sql-millis: 3000
+#          设置防火墙，防止sql注入
+        wall:
+          config:
+#            允许查询
+            selelct-allow: true
+#            允许插入
+            insert-allow: true
+#            允许删除
+            delete-allow: true
+#           开启日志记录
+        log4j:
+#          对所有resultSet（所有查询结果进行日志打印）
+          statement-log-enabled: true
+
+#    配置redis的地址和端口
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
+#   开启devtools的自动重启
+  devtools:
+    restart:
+      enabled: true
+#      注册到springboot健康管理中心
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8084
+
+#    配置dubbo的名称和注册中心地址
+dubbo:
+  application:
+    name: shoppingMall_provider
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+    timeout: 15000
+
+#    配置mybatis的映射文件路径和实体对象的别名
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#   配置pagehelper属性
+pagehelper:
+#  指定分页插件使用的数据库语言，pagehelper会选择合适的分页方式
+#  dialect: mysql
+#  分页合理化，默认是false，首页小于0，查询第一页，尾页大于总页数，查询最后一页
+  reasonable: true
+#  支持mapper接口参数来传递分页参数
+  support-methods-arguments: true
+
+management:
+  endpoint:
+    beans:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

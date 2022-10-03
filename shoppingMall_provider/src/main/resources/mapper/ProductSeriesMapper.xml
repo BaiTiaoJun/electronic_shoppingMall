@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductSeriesMapper">
+  <resultMap id="BaseResultMap" type="com.example.domain.ProductSeries">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="avaliable" jdbcType="INTEGER" property="avaliable" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, name, avaliable, description, score, version, brand
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product_series
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_product_series
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.domain.ProductSeries">
+    insert into tbl_product_series (sid, name, avaliable, 
+      description, score, brand
+      version)
+    values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{avaliable,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR},
+      #{version,jdbcType=INTEGER}), #{brand,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.domain.ProductSeries">
+    insert into tbl_product_series
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="avaliable != null">
+        avaliable,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avaliable != null">
+        #{avaliable,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.domain.ProductSeries">
+    update tbl_product_series
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avaliable != null">
+        avaliable = #{avaliable,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        version = #{brand,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.domain.ProductSeries">
+    update tbl_product_series
+    set name = #{name,jdbcType=VARCHAR},
+      avaliable = #{avaliable,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      score = #{score,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+      brand = #{brand,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+<!--  根据系列编号查询商品系列-->
+  <update id="editProductSeriesAvailableBySeries" >
+    update tbl_product_series
+    set avaliable = avaliable - #{num}, version = version + 1
+    where sid = #{sid,jdbcType=VARCHAR} and avaliable >= 0 and version = #{version}
+  </update>
+<!--根据购物车的cid查询有所与之相关的的商品系列-->
+  <select id="selectProductSeriesListByCid" parameterType="string" resultMap="BaseResultMap">
+    select ps.sid, name, avaliable, description, score, version, brand
+    from tbl_product_series ps
+    join tbl_product_series_cart_relation pscr on ps.sid = pscr.sid
+    where pscr.cid = #{cid}
+  </select>
+<!--  通过sid作为条件，把前端传递的商品数量在商品系列中做比较-->
+  <select id="selectBySidAndProductNum" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tbl_product_series
+    where sid = #{sid} and avaliable >= #{productNum}
+  </select>
+
+  <delete id="deleteProductSeriesBySid" parameterType="string">
+    delete
+    from tbl_product_series
+    where sid = #{sid}
+  </delete>
+</mapper>

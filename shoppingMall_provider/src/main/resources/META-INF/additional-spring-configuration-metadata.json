@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource.druid.filter.log4j.log4j2.statement-log-enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.druid.filter.log4j.log4j2.statement-log-enabled."
+    },
+    {
+      "name": "spring.datasource.druid.filters.filter.stat.log-slow-sql",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.druid.filters.filter.stat.log-slow-sql."
+    }
+  ] }

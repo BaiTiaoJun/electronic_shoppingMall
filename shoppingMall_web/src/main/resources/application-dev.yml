@@ -1,0 +1,74 @@
+#    消费者的端口和上下文根
+server:
+  port: 8081
+  servlet:
+    context-path: /
+#    配置字符过滤器为UTF-8
+#    encoding:
+#      charset: UTF-8
+#      force: true
+#      enabled: true
+#    session过期时间：24小时
+    session:
+      timeout: PT24H
+#   关闭默认的iso-8859-1字符编码
+    encoding:
+      enabled: false
+#        配置cookie的名字
+#      cookie:
+#        name: code
+
+#    配置dubbo的名称和注册中心地址
+dubbo:
+  application:
+    name: shoppingMall-web
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+    timeout: 15000
+    check: false
+
+#     配置thymeleaf的缓存机制，使用字符集名，类型
+spring:
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+#    thymeleaf视图解析器，默认可不定义
+    prefix: classpath:/templates/
+    suffix: .html
+#    配置redis的地址和端口
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
+#    注册到健康监控的服务中心
+  boot:
+    admin:
+      client:
+        url: http://localhost:8084
+#   开启devtools的自动启动（虚假热部署）
+  devtools:
+    restart:
+      enabled: true
+  servlet:
+    multipart:
+#     设置springmvc中允许上传的单个文件大小，默认是1MB
+      max-file-size: 200MB
+#     设置springmvc中允许的"表单"请求中上传文件总大小，默认是10MB
+      max-request-size: 1GB
+
+#   开启监控的所有端点，同时配置所有端点均可通过互联网访问
+management:
+  endpoint:
+    beans:
+      enabled: true
+#   开启显示健康检查端点的具体信息
+    health:
+      show-details: always
+#      暴露所有的接口
+  endpoints:
+    web:
+      exposure:
+        include: "*"

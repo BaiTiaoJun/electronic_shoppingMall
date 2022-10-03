@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <link rel="stylesheet" th:href="@{/css/order-list.css}"/>
+
+    <!-- modernizr JS
+============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <script th:src="@{/js/calculater.js}"></script>
+
+    <style type="text/css">
+        .remove-expire:hover {
+            color: #0a0a0a;
+        }
+    </style>
+</head>
+
+<body>
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+<![endif]-->
+
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
+
+    <!-- Start of Header -->
+    <div th:include="components/header :: html"></div>
+    <!-- End of Header -->
+
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" th:href="@{/}">首页</a>
+                        <span class="breadcrumb-item active">订单</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <div  class="n-order">
+        <h2 >订单</h2>
+        <!--        订单数量等于0-->
+        <img th:if="${resultVo.pageInfo.list.size() eq 0}" th:src="@{/images/empty_order.jpg}" style="margin-left: 240px;" />
+        <!--        订单数量大于0-->
+        <h3 th:if="${resultVo.pageInfo.list.size() > 0}">
+            <input type="checkbox" class="n-checkbox n-checkbox-all allCheck" th:value="${resultVo.totalUnPaidPrice}"><i></i></input><span style="margin-left: 5px">全选</span>
+        </h3>
+
+        <ul class="n-orderList" id="primary">
+            <!-- 订单列表-->
+            <li class="orderList" th:each="order:${resultVo.pageInfo.list}" th:inline="text">
+                <div class="n-orderList-header">
+                    <input type="checkbox" class="n-checkbox childCheck" th:value="${order.singleProductTotalPrice}" th:oid="${order.oid}" th:if="${order.payStatus eq '待支付' && order.available gt 0}"><i></i></input>
+                    <h3 style="margin-left: 5px" th:text="|订单号：${order.oid}|"></h3>
+                    <em style="margin-left: 420px">订单总价格：<i th:text="${#numbers.formatCurrency(order.singleProductTotalPrice)}"></i></em>
+                    <span th:text="${order.createTime}"></span>
+                </div>
+
+                <div class="n-orderList-content">
+                    <a th:href="|@{/product/toSingleProduct.do}?pid=${order.pid}|"><img th:src="|@{http://124.222.122.45/}${order.image}|" /></a>
+                    <ul>
+                        <li style="font-size: 14px;font-weight: bold;"><span>商品名称：</span>[[${order.name}]]</li>
+                        <li><span>品牌：</span>[[${order.brand}]]</li>
+                        <li><span>套餐：</span><i>[[${order.color}]]</i></li>
+                        <li><span>颜色：</span><i>[[${order.setMeal}]]</i></li>
+                    </ul>
+                    <ul th:if="${order.available gt 0 && order.payStatus eq '待支付' || order.payStatus eq '支付成功'}">
+                        <li><span>单价：</span><em class="n-orderList-price" th:text="|¥&nbsp;${order.singleProductPrice}|"></em></li>
+                        <li><span>数量：</span>[[${order.singleProductTotalNum}]]</li>
+                        <li><span>支付状态：</span>[[${order.payStatus}]]</li>
+                    </ul>
+                    <div th:if="${order.payStatus eq '支付成功'}">
+                        <button class="sureBtn" th:oid="${order.oid}" th:if="${order.orderStatus eq '已签收'}" th:text="${order.orderStatus}" style="background-color: #797979;cursor: auto" disabled></button>
+                        <button class="sureBtn" th:oid="${order.oid}" th:if="${order.orderStatus eq '已支付'}" >确认收货</button>
+                    </div>
+<!--                    待支付和商品剩余数大于0的情况-->
+                    <div th:if="${order.payStatus eq '待支付' && order.available gt 0}">
+                        <button th:oid="${order.oid}" class="paySingleBtn">立即支付</button>
+                        <button class="n-orderList-delBtn removeBtn" th:orderId="${order.oid}">取消订单</button>
+                    </div>
+<!--                    商品剩余数等于0的情况-->
+                    <div th:if="${order.payStatus eq '待支付' && order.available eq 0}">
+                        <span style="color: gray;font-size: 14px;margin-left: 37px;">此订单已过期</span>
+                        <a class="removeExpireBtn removeBtn" th:orderId="${order.oid}" style="color: gray;font-size: 13px;margin-left: 69px;cursor: pointer;" >删除</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="n-page" th:if="${resultVo.pageInfo.list.size() > 0}">
+            <li class="n-page-text splitPageArrow" th:value="${resultVo.pageInfo.prePage}">上一页</li>
+            <div th:each="page:${#numbers.sequence(1, resultVo.pageInfo.pages)}">
+                <div th:if="${page eq resultVo.pageInfo.pageNum}">
+                    <li class="n-page-btn n-page-cur" >
+                        <span th:text="${pageStat.index + 1}"></span>
+                    </li>
+                </div>
+                <div th:if="${page ne resultVo.pageInfo.pageNum}">
+                    <li class="n-page-btn ">
+                        <span class="splitPage" th:text="${pageStat.index + 1}"></span>
+                    </li>
+                </div>
+            </div>
+            <li class="n-page-text  splitPageArrow" th:value="${resultVo.pageInfo.nextPage}">下一页</li>
+            <li class="n-page-jump">到<input type="text" id="pageInput" />页</li>
+        </ul>
+
+        <div class="n-orderTotal" th:if="${resultVo.pageInfo.list.size() > 0}">
+            <h3><span style="font-size: 17px;margin-bottom: 2px;">合计：</span><em id="totalPrice" th:text="${#numbers.formatCurrency(0)}"></em></h3>
+            <p><button id="payAllBtn">合并支付</button></p>
+        </div>
+    </div>
+    <!-- End of Main Content Wrapper -->
+
+    <!-- Start of Footer -->
+    <div th:include="components/footer :: html"></div>
+    <!-- End of Footer -->
+
+    <!-- Start of Scroll to Top -->
+    <div id="to_top">
+        <i class="ion ion-ios-arrow-forward"></i>
+        <i class="ion ion-ios-arrow-forward"></i>
+    </div>
+    <!-- End of Scroll to Top -->
+
+    <!-- 提示对话框 -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal" style="margin-top: 250px;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" style="width: 350px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 290px"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <span id="dialog-info" style="font-size: 17px;color: #646464;"></span>
+                </div>
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="height: 40px;background-color: #f26307;width: 100px;border-color: #FFFFFF;border-radius: 0.7rem;">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+<!-- 复选框Js -->
+<script>
+    // document.querySelectorAll('.n-checkbox').forEach(el=> el.onclick = e=>{
+    //     const checkFunc = (c,isCheck)=>{
+    //         c[isCheck ? 'setAttribute' : 'removeAttribute']( 'checkd',1)
+    //         c.classList[isCheck ? 'add' : 'remove']('n-checkbox-check');
+    //     }
+    //     const check = !el.getAttribute('checkd');
+    //
+    //     checkFunc(el,check );
+    //
+    //     const allCheckBox = document.querySelector('.n-checkbox-all');
+    //     if(el === allCheckBox) return document.querySelectorAll('.n-checkbox').forEach(c=> checkFunc(c, check) );
+    //     const isAll = [...document.querySelectorAll('.n-orderList .n-checkbox')].every(c=> c.getAttribute('checkd'));
+    //     checkFunc( allCheckBox, isAll);
+    // })
+
+
+</script>
+
+<script th:inline="javascript">
+
+    $(".allCheck").prop('checked', false);
+    $(".childCheck").prop('checked', false);
+
+    let temp = 0;
+    let totalPrice = $("#totalPrice");
+
+    // 全选
+    $(".allCheck").click(function() {
+        checkAll(this);
+    })
+
+    function checkAll(t) {
+        if ($(".allCheck").prop('checked')) {
+            $(".childCheck").prop('checked', true);
+            temp = parseFloat($(t).val()).toFixed(2);
+            totalPrice.text("¥ " + temp);
+        } else {
+            $(".childCheck").prop('checked', false);
+        }
+        if ($(".childCheck:checked").size() === 0) {
+            totalPrice.text("¥ " + parseFloat("0").toFixed(2));
+            temp = 0;
+        }
+    }
+
+    //单选
+    $(".childCheck").click(function() {
+        checkChild(this);
+    })
+
+    function checkChild(t) {
+        if ($(".childCheck").size() === $(".childCheck:checked").size()) {
+            $(".allCheck").prop('checked', true);
+        } else {
+            $(".allCheck").prop('checked', false);
+        }
+
+        //合计价格
+        if ($(t).prop('checked')) {
+            temp += parseFloat($(t).val());
+        } else if (temp !== 0) {
+            temp -= parseFloat($(t).val());
+
+        }
+        totalPrice.text("¥ " + temp.toFixed(2));
+    }
+
+    //支付单个订单
+    $(".paySingleBtn").on('click', function () {
+        paySingle(this);
+    })
+
+    function paySingle(t) {
+        let oid = $(t).attr('oid');
+        location.href = "/admin/payUnPaidProduct.do?oids=" + oid;
+    }
+
+    //合并支付订单
+    $("#payAllBtn").on('click', function () {
+        let $childCheck = $(".childCheck:checked");
+
+        // console.log($childCheck.length)
+
+        // if ($childCheck === null) {
+        //     $("#dialog-info").text("当前页没有需要合并支付的订单");
+        //     $("#myModal").show();
+        //     return false;
+        // }
+
+        if ($childCheck.length === 0) {
+            $("#dialog-info").text("请选择要合并支付的订单");
+            $("#myModal").modal('show');
+            return false;
+        }
+
+        let param = "oids=";
+        $.each($childCheck, function () {
+            param += $(this).attr("oid") + "&oids=";
+        })
+        param = param.substring(0, param.lastIndexOf('&'));
+
+        location.href = "/admin/payUnPaidProduct.do?" + param;
+    })
+
+    //删除订单
+    $(".removeBtn").on('click', function () {
+        remove(this);
+    })
+
+    function remove(t) {
+        let orderId = $(t).attr('orderId');
+        $.ajax({
+            url: "/admin/removeOrder.do",
+            data: {
+                orderId:orderId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.flag) {
+                    reloadOrder();
+                } else {
+                    $("#dialog-info").text(data.message);
+                    $("#myModal").show();
+                }
+            },
+            error: function () {
+                $("#dialog-info").text("取消订单异常");
+                $("#myModal").show();
+            }
+        })
+    }
+
+    $(".sureBtn").on('click', function () {
+        sureOrder(this)
+    })
+
+    function sureOrder(t) {
+        let oid = $(t).attr("oid");
+
+        $.ajax({
+            url: "/admin/sureOrder.do",
+            data: {
+                oid:oid
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.flag === true) {
+                    reloadOrder();
+                } else {
+                    $("#dialog-info").text(data.message);
+                    $("#myModal").show();
+                }
+            },
+            error: function () {
+                $("#dialog-info").text("系统忙，请稍后再试");
+                $("#myModal").show();
+            }
+        })
+    }
+
+    function reloadOrder() {
+        $(".allCheck").prop('checked', false);
+
+        $("#primary").load("http://localhost:8081/admin/toOrder.do?currentPage=" + [[${resultVo.pageInfo.pageNum}]] + " .orderList", function () {
+            // 全选
+            $(".allCheck").click(function() {
+                checkAll(this);
+            })
+            //单选
+            $(".childCheck").click(function() {
+                checkChild(this);
+            })
+            //支付单个商品
+            $(".paySingleBtn").on('click', function () {
+                paySingle(this);
+            })
+            //删除订单
+            $(".removeBtn").on('click', function () {
+                remove(this);
+            })
+            //确定订单
+            $(".sureBtn").on('click', function () {
+                sureOrder(this)
+            })
+        });
+    }
+
+    $(".splitPage").click(function () {
+        let page = $(this).text();
+        paginationShow(page);
+    })
+
+    $(".splitPageArrow").click(function () {
+        let page = $(this).attr("value");
+        paginationShow(page);
+    })
+
+    $(window).keydown(function (event) {
+        if (event.keyCode === 13) {
+            let page = $("#pageInput").val();
+            let pages = [[${resultVo.pageInfo.pages}]];
+            if (page > pages) {
+                paginationShow(pages);
+            } else if (parseInt(page) < 1) {
+                paginationShow(1);
+            } else {
+                paginationShow(page);
+            }
+        }
+    })
+
+    //翻页展示函数
+    function paginationShow(currentPage) {
+        location.href = "/admin/toOrder.do?currentPage=" + currentPage;
+    }
+</script>
+</body>
+</html>

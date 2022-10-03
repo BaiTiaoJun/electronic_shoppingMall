@@ -1,0 +1,657 @@
+﻿<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>淘淘乐</title>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+
+    <!-- CSS files
+============================================ -->
+
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <!-- modernizr JS
+============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <style type="text/css">
+        .btn-color {
+            color: #FFFFFF !important;
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+<![endif]-->
+
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
+
+    <!-- Start of Header -->
+    <div th:include="components/header :: html"></div>
+    <!-- End of Header -->
+
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" th:href="@{/product/queryProductList.do}">主页</a>
+                        <a class="breadcrumb-item" th:href="@{/product/queryProductListBySplitPage.do}">商品页</a>
+                        <span class="breadcrumb-item active" th:text="${singleProduct.product.name}"></span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <div id="content" class="main-content-wrapper">
+
+        <!-- Start of Main Product Wrapper -->
+        <div class="main-product-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <main id="primary" class="site-main">
+                            <div class="single-product-wrapper">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                        <a th:href="|@{/images/products/single/}${singleProduct.product.image}|" class="product-mainImg-block" data-size="800x800" style="width: 80% !important;">
+                                            <img th:src="|@{http://124.222.122.45/}${singleProduct.product.image}|" id="product-1" class="product-mainImg">
+                                            <div><i class="pe-7s-expand1"></i></div>
+                                        </a>
+                                        <div class="product-mainImg-list" th:if="${singleProduct.imageList ne null}">
+                                            <img th:each="image:${singleProduct.imageList}" th:src="|@{http://124.222.122.45/}${image}|" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="product-details">
+                                            <h3 class="product-name" th:text="${singleProduct.product.name}">
+                                            </h3>
+                                            <div class="product-ratings d-flex">
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '0'}">
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '20'}">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '40'}">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '60'}">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '80'}">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <ul class="rating d-flex mr-4"
+                                                    th:if="${singleProduct.product.score eq '100'}">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <ul class="comments-advices list-inline d-flex">
+                                                    <li class="list-inline-item mr-3"><a href="#"
+                                                                                         th:text="|${singleProduct.count}条评论|"></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-price">
+                                                <p class="d-flex align-items-center">
+															<span class="price-old"
+                                                                  th:text="${singleProduct.product.oldPrice}"></span>
+                                                    <span class="price-new" th:text="${#numbers.formatCurrency(singleProduct.product.newPrice)}"></span>
+                                                    <span class="price-discount" th:text="|${singleProduct.percentage}|"></span>
+                                                </p>
+                                            </div>
+                                            <div class="product-meta">
+                                                <ul class="list-unstyled">
+                                                    <li>品牌： <a href="#"><span th:text="${singleProduct.product.brand}"></span></a></li>
+                                                    <li>评价分数: <span th:text="${singleProduct.product.score}"></span></li>
+                                                    <li>剩余数量: <span th:text="${singleProduct.product.avaliable}"></span></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="product-actions">
+                                                <div class="product-size clearfix">
+                                                    <label>套餐</label>
+                                                    <div class="product-size-list">
+                                                        <span class="setMeal" th:each="productSetMeal:${singleProduct.productSetMealList}"  th:text="${productSetMeal.setMeal}"  th:value="${productSetMeal.sid}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-size clearfix">
+                                                    <label>颜色</label>
+                                                    <div class="product-size-list">
+                                                        <span class="color" th:each="productColor:${singleProduct.productColorList}"  th:text="${productColor.color}"  th:value="${productColor.cid}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-stock">
+                                                    <label>数量</label>
+                                                    <ul class="d-flex flex-wrap align-items-center">
+                                                        <li class="box-quantity">
+                                                            <form action="#">
+                                                                <input class="quantity" type="number" min="1" value="1" id="num">
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <!--登录前-->
+                                                            <button type="button" class="default-btn" th:if="${session.get('user') eq null && singleProduct.product.avaliable gt 0}"><a class="btn-color" th:href="@{/admin/toLogin.do}">加入购物车</a></button>
+                                                            <button type="button" class="default-btn"  th:if="${session.get('user') eq null && singleProduct.product.avaliable gt 0}" style="margin-left: 16px"><a class="btn-color" th:href="@{/admin/toLogin.do}" >立即支付</a></button>
+                                                            <!--登录后-->
+                                                            <button type="button" class="default-btn btn-color" id="addCartBtn" th:if="${session.get('user') ne null && singleProduct.product.avaliable gt 0}">加入购物车</button>
+                                                            <button type="button" class="default-btn btn-color" id="payBtn" th:if="${session.get('user') ne null && singleProduct.product.avaliable gt 0}" style="margin-left: 16px" >立即支付</button>
+                                                            <!--剩余数量为0-->
+                                                            <button type="button" class="default-btn btn-color" style="margin-left: 16px;background-color: #6b6b6b;width: 150px;cursor: auto" th:if="${singleProduct.product.avaliable eq 0}" disabled>此商品已下架</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="wishlist-compare">
+                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">加入愿望单</button>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="social-sharing d-flex align-items-center mt-half">
+                                                <span>分享</span>
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item"><a style="cursor: pointer !important;" id="share" class="bg-gplus" data-toggle="tooltip" data-position="top" data-original-title="分享链接" ><i class="fa fa-link"></i><span style="margin-right: 10px;">分享链接</span></a></li>
+                                                    <li class="list-inline-item"><a style="cursor: pointer !important;" class="bg-twitter" data-toggle="tooltip" data-position="top" data-original-title="分享到QQ空间" ><i class="fa fa-qq"></i><span>分享到QQ空间</span></a></li>
+                                                    <li class="list-inline-item"><a style="cursor: pointer !important;" class="bg-success" data-toggle="tooltip" data-position="top" data-original-title="微信" target="_blank"><i class="fa fa-wechat"></i><span>微信</span></a></li>
+<!--                                                    <div class="bshare-custom">-->
+<!--                                                        <a title="分享到QQ空间" class="bshare-qzone"></a>-->
+<!--                                                        <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>-->
+<!--                                                        <a title="分享到人人网" class="bshare-renren"></a>-->
+<!--                                                        <a title="分享到腾讯微博" class="bshare-qqmb"></a>-->
+<!--                                                        <a title="分享到网易微博" class="bshare-neteasemb"></a>-->
+<!--                                                        <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>-->
+<!--                                                        <span class="BSHARE_COUNT bshare-share-count">0</span>-->
+<!--                                                    </div>-->
+<!--                                                    <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/button.js#style=-1&amp;uuid=&amp;pophcol=1&amp;lang=zh"></script>-->
+<!--                                                    <a class="bshareDiv" onclick="javascript:return false;"></a>-->
+<!--                                                    <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>-->
+                                                </ul>
+                                            </div>
+                                        </div> <!-- end of product-details -->
+                                    </div>
+                                </div> <!-- end of row -->
+
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12">
+                                        <div class="product-info mt-full">
+                                            <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+                                                <li class="nav-item mr-4">
+                                                    <a class="nav-link active" id="nav_desctiption" data-toggle="pill" href="#tab_description" role="tab" aria-controls="tab_description" aria-selected="true">描述</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="nav_review" data-toggle="pill" href="#tab_review" role="tab" aria-controls="tab_review" aria-selected="false" th:text="|评价数(${singleProduct.count})|"></a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="tab_description" role="tabpanel" aria-labelledby="nav_desctiption">
+                                                    <p th:text="|${singleProduct.product.description}|"></p>
+                                                    <div th:each="detailImage:${singleProduct.detailImages}">
+                                                            <span th:if="${detailImage ne ''}">
+                                                                <img th:src="|@{http://124.222.122.45/}${detailImage}|" style="width: 100%;"/>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab_review" role="tabpanel" aria-labelledby="nav_review">
+                                                    <div class="product-review">
+                                                        <div class="customer-review">
+
+                                                            <table class="table table-striped table-bordered" th:each="remark:${singleProduct.remarks}">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="product-ratings d-flex justify-content-end align-items-center">
+                                                                            <span class="mr-4" th:text="${remark.remarkTime}"></span>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 0}">
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                            </ul>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 20}">
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                            </ul>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 40}">
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                            </ul>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 60}">
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                            </ul>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 80}">
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                            </ul>
+                                                                            <ul class="rating d-flex" th:if="${remark.score eq 100}">
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                                <li><i class="fa fa-star"></i></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+
+                                                                        <div class="product-ratings d-flex">
+                                                                            <div style="flex: 0 0 60px">
+                                                                                <img th:src="@{http://124.222.122.45/unlogin-profile.jpg}" class="face" alt="">
+                                                                                <p th:text="${remark.remarkBy}"></p>
+                                                                            </div>
+                                                                            <div style="text-align: left; margin-left: 15px" th:text="${remark.content}"></div>
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <div class="pagination">
+                                                                <ul>
+                                                                    <li id="prePage">上一页</li>
+                                                                    <li id="nextPage">下一页</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div> <!-- end of customer-review -->
+
+                                                        <form action="#" class="review-form">
+                                                            <h2>Write a review</h2>
+
+                                                            <div class="form-group row">
+                                                                <div class="col">
+                                                                    <label class="col-form-label"><span class="text-danger">*</span> Your Review</label>
+                                                                    <textarea class="form-control" required></textarea>
+                                                                    <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col">
+                                                                    <label class="col-form-label"><span class="text-danger">*</span> Rating</label>
+                                                                    &nbsp;&nbsp;&nbsp; Worst&nbsp;
+                                                                    <input type="radio" value="1" name="rating">
+                                                                    &nbsp;
+                                                                    <input type="radio" value="2" name="rating">
+                                                                    &nbsp;
+                                                                    <input type="radio" value="3" name="rating">
+                                                                    &nbsp;
+                                                                    <input type="radio" value="4" name="rating">
+                                                                    &nbsp;
+                                                                    <input type="radio" value="5" name="rating" checked>
+                                                                    &nbsp;Best
+                                                                </div>
+                                                            </div>
+                                                            <div class="buttons d-flex justify-content-end">
+                                                                <button class="default-btn" type="submit">Continue</button>
+                                                            </div>
+                                                        </form> <!-- end of review-form -->
+                                                    </div> <!-- end of product-review -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of row -->
+                            </div> <!-- end of single-product-wrapper -->
+                        </main> <!-- end of #primary -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Main Product Wrapper -->
+
+        <!-- Start of Related Products -->
+        <section class="related-products">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <div class="section-title left-aligned with-border">
+                            <h2>相关商品</h2>
+                        </div>
+                        <div class="latest-product-wrapper pos-r">
+                            <div class="product-carousel" data-visible-slide="4" data-visible-lg-slide="4" data-visible-md-slide="3" data-visible-sm-slide="2" data-loop="true" data-speed="1000">
+
+                                <!-- Slides -->
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide product-layout product-grid" th:if="${singleProduct.products.size() > 1}" th:each="product:${singleProduct.products}">
+                                        <div class="product-thumb">
+                                            <div class="product-inner">
+                                                <div class="product-image">
+                                                    <a th:href="|@{/product/toSingleProduct.do}?pid=${product.pid}|" >
+                                                        <img th:src="|@{http://124.222.122.45/}${product.image}|" alt="Proin Lectus Ipsum" class="hover-image">
+                                                        <img th:src="|@{http://124.222.122.45/}${product.imageTransform}|" alt="Proin Lectus Ipsum" title="Proin Lectus Ipsum">
+                                                    </a>
+                                                </div> <!-- end of product-image -->
+
+                                                <div class="product-caption">
+                                                    <h4 class="product-name"><a href="single-product.html" th:text="${product.name}"></a></h4>
+                                                    <p class="product-price">
+                                                        <span class="price-new" th:text="${#numbers.formatCurrency(product.newPrice)}"></span>
+                                                    </p>
+                                                </div><!-- end of product-caption -->
+                                            </div><!-- end of product-inner -->
+                                        </div><!-- end of product-thumb -->
+                                    </div> <!-- end of product-layout -->
+
+                                </div> <!-- end of swiper-wrapper -->
+
+                                <!-- Navigation -->
+                                <div class="swiper-arrow next"><i class="fa fa-angle-right" style="margin-top: 15px"></i></div>
+                                <div class="swiper-arrow prev"><i class="fa fa-angle-left" style="margin-top: 15px"></i></div>
+                            </div> <!-- end of product-carousel -->
+                        </div> <!-- end of latest-product-wrapper -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </section>
+        <!-- End of Related Products -->
+    </div>
+    <!-- End of Main Content Wrapper -->
+
+    <!-- Start of Footer -->
+    <div th:include="components/footer :: html"></div>
+    <!-- End of Footer -->
+
+    <!-- Start of Scroll to Top -->
+    <div id="to_top">
+        <i class="ion ion-ios-arrow-forward"></i>
+        <i class="ion ion-ios-arrow-forward"></i>
+    </div>
+    <!-- End of Scroll to Top -->
+
+    <!-- 提示对话框 -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="myModal" style="margin-top: 300px;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" style="width: 350px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 290px"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <span id="dialog-info" style="font-size: 17px;color: #646464;"></span>
+                </div>
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="height: 40px;background-color: #f26307;width: 100px;border-color: #FFFFFF;border-radius: 0.7rem;">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    .n-preview>div{
+        width: 750px;
+        height: 750px;
+        overflow: hidden;
+    }
+    .n-preview-imgs{
+        transform: translate(0,0);
+        width: 100%;
+        transition: all 0.5s;
+        height: 100%;
+        overflow: visible;
+        display: flex;
+        align-items: stretch;
+    }
+    .n-preview-imgs img{
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        flex: 0 0 100%;
+    }
+    .n-preview>i{
+        font-size: 50px;
+        color: #eee;
+        cursor: pointer;
+
+    }
+    .n-preview>i:hover{
+        color: #fff;
+    }
+
+</style>
+
+<script>
+
+    window.nPreview = ({ imgs = [], cur = 0}) =>{
+        const div = document.createElement('div');
+        if(!imgs.length) return;
+        div.className = 'n-preview';
+        div.innerHTML = `
+			<i class="n-preview-l fa fa-angle-left"></i>
+			<div>
+				<div  class="n-preview-imgs">
+					${ imgs.map(src=> `<img src="${src}" />`).join('') }
+				</div>
+			</div>
+			<i class="n-preview-r fa fa-angle-right"></i>
+		`;
+        document.body.appendChild(div);
+
+        const onChange = n=>{
+            cur += n;
+            cur = cur < 0 ? 0 : cur >= imgs.length ? imgs.length - 1 : cur;
+            div.querySelector('.n-preview-imgs').style.transform = `translate(${ cur * -100}%,0)`;
+        }
+        onChange(0);
+
+        div.querySelector('.n-preview-l').onclick = e=> onChange(-1);
+        div.querySelector('.n-preview-r').onclick = e=> onChange(1);
+
+        div.querySelectorAll('.n-preview-l, .n-preview-r, .n-preview>div').forEach(el=> el.onmousedown = e=> e.stopPropagation() );
+
+        div.onmousedown = ()=> document.body.removeChild(div);
+    }
+</script>
+<!-- End of Whole Site Wrapper -->
+
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+<script th:src="@{/js/swiperAuto.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+
+    let mainImgCur = 0;
+    document.querySelector('.product-mainImg-block >div').onclick = e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        window.nPreview({imgs: [...document.querySelectorAll('.product-mainImg-list>img')].map(v=> v.src), cur: mainImgCur });
+    }
+    
+    let setMealId;
+    let colorId;
+
+    setMealId = "";
+    colorId = "";
+
+    // 图片切换
+    document.querySelectorAll('.product-mainImg-list>img').forEach((el,idx)=> el.onmousemove = ()=>{
+        document.querySelector('.product-mainImg').src =  el.src;
+        mainImgCur = idx;
+        document.querySelectorAll('.product-mainImg-list>img').forEach(c=> c.classList[ el === c ? 'add' : 'remove']('product-mainImg-list-cur') );
+    })
+    document.querySelector('.product-mainImg-list>img') && document.querySelector('.product-mainImg-list>img').onmousemove();
+
+    $(".setMeal").click(function () {
+        setMealId = $(this).attr("value");
+        document.querySelectorAll(".setMeal").forEach(el=> el.classList[setMealId === el.getAttribute('value') ? 'add' : 'remove']( 'product-size-list-cur' ) )
+
+    })
+
+    $(".color").click(function () {
+        colorId = $(this).attr("value");
+        // $('.product-mainImg')[0].src =  $(this)[0].src;
+        // document.querySelectorAll('.product-mainImg-list>img').forEach(c=> c.classList.remove('product-mainImg-list-cur') );
+        document.querySelectorAll(".color").forEach(el=> el.classList[colorId === el.getAttribute('value') ? 'add' : 'remove']( 'product-size-list-cur' ) )
+    })
+
+    let pid = [[${singleProduct.product.pid}]];
+
+    $("#addCartBtn").click(function () {
+        let num = $("#num").val();
+
+        if (parseInt(num) > parseInt([[${singleProduct.product.avaliable}]])) {
+            $("#dialog-info").text("添加数量不可超过此商品剩余数量");
+            $("#myModal").modal("show");
+            return false;
+        }
+
+        if (setMealId === "" || colorId === "") {
+            $("#dialog-info").text("请选择要加入购物车的颜色和套餐");
+            $("#myModal").modal("show");
+            return false;
+        }
+        $.ajax({
+            url: "/admin/addCart.do",
+            data: {
+                setMealId:setMealId,
+                colorId:colorId,
+                pid:pid,
+                num:num
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if(data.flag === true) {
+                    $("#dialog-info").text("成功加入购物车");
+                } else {
+                    $("#dialog-info").text("加入购物车失败");
+                }
+            },
+            error:function () {
+                $("#dialog-info").text("加入购物车异常");
+
+            }
+        })
+        $("#myModal").modal("show");
+    })
+    
+    $("#payBtn").click(function () {
+        let num = $("#num").val();
+
+        if (parseInt(num) > parseInt([[${singleProduct.product.avaliable}]])) {
+            $("#dialog-info").text("购买数量不可超过此商品剩余数量");
+            $("#myModal").modal("show");
+            return false;
+        }
+
+        if (setMealId === "" || colorId === "") {
+            $("#dialog-info").text("请选择要购买的颜色和套餐");
+            $("#myModal").modal("show");
+            return false;
+        }
+
+        // 计算购买总价
+        let price = [[${singleProduct.product.newPrice}]];
+        let setMeal = $(".setMeal").attr("value");
+        let color = $(".color").attr("value");
+
+        location.href = "/product/pay.do?price=" + price + "&num=" + num + "&pid=" + pid + "&setMeal=" + setMeal + "&color=" + color;
+    })
+
+    $("#share").click(function () {
+        $.ajax({
+            url: "/product/shareProduct.do",
+            data: {
+                targetURL:location.href
+            },
+            type: "post",
+            dataType: "json",
+            success: function (res) {
+                $("#dialog-info").text("分享链接：" + res.data.link);
+                $("#myModal").modal("show");
+            }
+        })
+    })
+</script>
+</body>
+</html>

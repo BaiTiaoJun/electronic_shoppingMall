@@ -1,0 +1,14 @@
+server:
+  servlet:
+    context-path: /
+  port: 8082
+
+dubbo:
+  application:
+    name: shoppingMall_timer
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+    timeout: 15000
+    check: false

@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+#    解决循环依赖
+  main:
+    allow-circular-references: true

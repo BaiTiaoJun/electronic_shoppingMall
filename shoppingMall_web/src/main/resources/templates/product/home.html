@@ -1,0 +1,544 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>淘淘乐</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="robots" content="noindex, follow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+    <!-- CSS files
+    ============================================ -->
+    <!-- Boostrap stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}">
+    <!-- Plugins stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+    <!-- Master stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <!-- modernizr JS
+    ============================================ -->
+    <script th:src="@{/js/modernizr-2.8.3.min.js}"></script>
+
+    <style>
+        .box-right {
+            width: 290px;
+            height: 350px;
+            float: left;
+            margin-left: 8px;
+            border: 1px solid white;
+        }
+
+        .box-right .member {
+            width: 290px;
+            height: 132px;
+            background-size: 100% 100%;
+        }
+
+        .box-right .member .member-head {
+            width: 290px;
+            height: 265px;
+        }
+
+        .box-right .member-head .head {
+            width: 290px;
+            height: 185px;
+            position: relative;
+        }
+
+        .box-right .member-head .head a {
+            width: 90px;
+            height: 90px;
+            display: inline-block;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            margin-left: -50px;
+            border-radius: 50%;
+        }
+
+        .box-right .member-head .head a img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+
+
+        }
+
+        .box-right .member-head .hello {
+            display: inline-block;
+            width: 290px;
+            height: 17px;
+            line-height: 17px;
+            font-size: 22px;
+            columns: #3c3c3c;
+            text-align: center;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .box-right .member-head p {
+            height: 17px;
+            line-height: 17px;
+            text-align: center;
+        }
+
+        .box-right .member-head p a {
+            display: inline-block;
+            width: 72px;
+            height: 17px;
+            border-radius: 6px;
+            background-color: #ffe4dc;
+            line-height: 17px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #f40;
+            padding-left: 20px;
+            padding-right: 8px;
+            position: relative;
+        }
+
+        .box-right .member-head p span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .box-right .member-foot {
+            width: 290px;
+            height: 30px;
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .box-right .member-foot a {
+            display: inline-block;
+            width: 110px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            color: #fff;
+            margin: 0 6px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 6px;
+            background: #0f2f6c;
+        }
+
+        /* 显示用户简单信息的样式 */
+        .box-right .member-foot ul {
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            font-size: 15px;
+        }
+
+        .box-right .member-foot ul li {
+            padding-left: 16px;
+        }
+
+        .box-right .member-foot ul span {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cell-foot:hover{
+            color: #ffa500;
+        }
+
+        .user-info-num {
+            font-size: 20px;
+            color: #ffc300
+        }
+
+        .on {
+            margin-top: 15px !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-two">
+
+    <div th:include="components/header :: html"></div>
+
+    <!-- Start of Primary Slider Section -->
+    <section class="primary-slider-section mb0 mt-half">
+        <div class="container">
+            <div class="row" style="height:350px;">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                    <div id="primary_slider" class="swiper-container slider-type-2" style="height:350px;">
+                        <!-- 轮播图 -->
+                        <div class="swiper-wrapper" style="height: 350px;">
+
+                            <div class="swiper-slide bg-img-wrapper">
+                                <div class="slide-inner image-placeholder">
+                                    <img th:src="@{/images/slider/home-2/slide-2.jpg}" class="visually-hidden"
+                                         alt="Slider Image"/>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="slide-content layer-animation-1">
+                                                    <h1>Kz-es3</h1>
+                                                    <h2>Bluetooth Headphone</h2>
+                                                    <p><span>At a price</span><span class="primary-color">$199</span>
+                                                    </p>
+                                                    <div class="slide-button">
+                                                        <a class="default-btn transparent" href="shop-grid.html"
+                                                           title="Shop Now">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide bg-img-wrapper">
+                                <div class="slide-inner image-placeholder">
+                                    <img th:src="@{/images/slider/home-2/slide-1.jpg}" class="visually-hidden"
+                                         alt="Slider Image">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="slide-content layer-animation-2">
+                                                    <h1>Amazing iPhone Amazing price</h1>
+                                                    <p><span>Enjoy up to <span class="primary-color">RM300</span> savings &amp; additional 1 year warranty when you get<span
+                                                            class="primary-color">iPhone X</span> or <span
+                                                            class="primary-color">iPhone 8</span></span></p>
+                                                    <div class="slide-button">
+                                                        <a class="default-btn transparent" href="shop-grid.html"
+                                                           title="Shop Now">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide bg-img-wrapper">
+                                <div class="slide-inner image-placeholder">
+                                    <img th:src="@{images/slider/home-2/slide-1.jpg}" class="visually-hidden"
+                                         alt="Slider Image">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="slide-content layer-animation-2">
+                                                    <h1>Amazing iPhone Amazing price</h1>
+                                                    <p><span>Enjoy up to <span class="primary-color">RM300</span> savings &amp; additional 1 year warranty when you get<span
+                                                            class="primary-color">iPhone X</span> or <span
+                                                            class="primary-color">iPhone 8</span></span></p>
+                                                    <div class="slide-button">
+                                                        <a class="default-btn transparent" href="shop-grid.html"
+                                                           title="Shop Now">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide bg-img-wrapper">
+                                <div class="slide-inner image-placeholder">
+                                    <img th:src="@{/images/slider/home-2/slide-1.jpg}" class="visually-hidden"
+                                         alt="Slider Image">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="slide-content layer-animation-2">
+                                                    <h1>Amazing iPhone Amazing price</h1>
+                                                    <p><span>Enjoy up to <span class="primary-color">RM300</span> savings &amp; additional 1 year warranty when you get<span
+                                                            class="primary-color">iPhone X</span> or <span
+                                                            class="primary-color">iPhone 8</span></span></p>
+                                                    <div class="slide-button">
+                                                        <a class="default-btn transparent" href="shop-grid.html"
+                                                           title="Shop Now">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-arrow next slide"><i class="fa fa-angle-right"></i></div>
+                        <div class="swiper-arrow prev slide"><i class="fa fa-angle-left"></i></div>
+                        <!-- Slider Navigation -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <!--用户登录与用户状态展示-->
+                <div class="col-12 col-sm-12 col-md-12 col-lg-3 top-promo-banners">
+                    <div class="box-right">
+                        <div class="member">
+                            <!--未登录状态-->
+                            <div th:if="${session.get('user')} eq null">
+                                <div class="member-head">
+                                    <div class="head">
+                                        <img style="width: 80px; height: 80px; margin-top: 60px; margin-left: 105px; border-radius: 50%"
+                                             th:src="|@{http://124.222.122.45//group1/M00/00/00/CgAEEWMtbPeAeDzXAABfZZGHSP470.jpeg}|">
+                                    </div>
+                                    <span class="hello"> hi! 你好</span>
+                                </div>
+                                <div class="member-foot">
+                                    <a th:href="@{/admin/toLogin.do}" class="">登录</a>
+                                    <a th:href="@{/admin/toRegister.do}" class="">注册</a>
+                                </div>
+                            </div>
+
+                            <!--已登录状态-->
+                            <div th:if="${session.get('user')} ne null">
+                                <div class="member-head">
+                                    <div class="head">
+                                        <a th:href="|@{/admin/toMyAccount.do}?uid=${session.get('user').uid}|"><img style="width: 89px; height: 89px; border-radius: 50%; cursor: pointer" id="profileBtn" th:src="|@{http://124.222.122.45/}${session.user.image}|"></a>
+                                    </div>
+                                    <a th:href="|@{/admin/toMyAccount.do}?uid=${session.get('user').uid}|"><span class="hello" th:text="|hello&nbsp;${session.user.username}|"></a></span>
+                                </div>
+                                <div class="member-foot">
+                                    <ul style="margin-left: -22px;cursor: pointer">
+                                        <li class="cell-foot">
+                                            <span class="user-info-num">15</span>
+                                            <span id="cart">购物车</span>
+                                        </li>
+                                        <li class="cell-foot">
+                                            <span class="user-info-num">0</span>
+                                            <span>待收货</span>
+                                        </li>
+                                        <li class="cell-foot">
+                                            <span class="user-info-num">95</span>
+                                            <span>待发货</span>
+                                        </li>
+                                        <li class="cell-foot">
+                                            <span class="user-info-num">5</span>
+                                            <span>待付款</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of Primary Slider Section -->
+
+    <!-- Start of Main Content Wrapper -->
+    <main id="content" class="main-content-wrapper" style="margin-top:25px;">
+        <!-- Start of Featured Category -->
+        <section class="feature-category">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="section-title">
+                            <h2>分类浏览</h2>
+                        </div>
+                    </div>
+                </div> <!-- end of row -->
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="categories-carousel product-carousel" data-visible-slide="5" data-loop="false" data-speed="1000">
+
+                            <!-- 商品分类轮播栏 -->
+                            <div class="swiper-wrapper">
+                                <div class="single-category swiper-slide" th:each="productTypeValue:${productTypeValues}">
+                                    <div class="media-wrapper">
+                                        <div class="media-image">
+                                            <a th:href="|@{/product/queryProductListBySearch.do}?selectType=${productTypeValue.value}|"><img th:src="|@{http://124.222.122.45/}${productTypeValue.image}|" alt="Category Image"></a>
+                                        </div>
+                                        <div class="media-content">
+                                            <h2><a  th:href="|@{/product/queryProductListBySearch.do}?selectType=${productTypeValue.value}|" th:text="${productTypeValue.text}"></a></h2>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of single-category -->
+
+                            </div> <!-- end of swiper-wrapper -->
+
+                            <!-- Navigation -->
+                            <div class="swiper-arrow next"><i class="fa fa-angle-right on"></i></div>
+                            <div class="swiper-arrow prev"><i class="fa fa-angle-left on"></i></div>
+                        </div> <!-- end of categories-carousel -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </section>
+        <!-- End of Featured Category -->
+
+        <!-- Start of Best Selling Section -->
+        <section class="best-selling-section">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="best-selling-wrapper pos-r">
+
+                            <!-- Tab Contents -->
+                            <div class="tab-content" id="best_products_contents">
+                                <div class="tab-pane fade show active" id="category_cellphone" role="tabpanel"
+                                     aria-labelledby="nav_cellphone">
+                                    <div class="product-carousel" data-visible-slide="5" data-visible-lg-slide="3"
+                                         data-loop="true" data-speed="1000">
+
+                                        <!--  商品列表展示-->
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12">
+                                                <div class="shop-products-wrapper">
+                                                    <div class="tab-content">
+                                                        <div id="grid" class="tab-pane fade active show"
+                                                             role="tabpanel">
+                                                            <div class="row">
+
+                                                                <!--每一个商品展示信息单元-->
+                                                                <div class=" product-layout product-grid col-6 col-sm-6 col-md-4 col-lg-3" th:each="product:${productList}">
+                                                                        <div class="product-thumb">
+                                                                            <div class="product-inner">
+                                                                                <div class="product-image">
+                                                                                    <div class="label-product label-new" th:if="${product.createTime} eq ${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+                                                                                        <span>新品</span>
+                                                                                    </div>
+                                                                                    <a th:href="|@{/product/toSingleProduct.do}?pid=${product.pid}|">
+                                                                                        <img th:src="|@{http://124.222.122.45/}${product.image}|"
+                                                                                              width="225px" height="225px"
+                                                                                             class="hover-image">
+                                                                                        <img th:if="${product.imageTransform ne null}" th:src="|@{http://124.222.122.45/}${product.imageTransform}|"
+                                                                                             alt="Proin Lectus Ipsum"
+                                                                                             title="Proin Lectus Ipsum">
+                                                                                    </a>
+                                                                                    <div class="action-links">
+                                                                                        <a class="action-btn btn-cart"
+                                                                                           href="#" title="Add to Cart"><i
+                                                                                                class="pe-7s-cart"></i></a>
+                                                                                        <a class="action-btn btn-wishlist"
+                                                                                           href="#"
+                                                                                           title="Add to Wishlist"><i
+                                                                                                class="pe-7s-like"></i></a>
+                                                                                        <a class="action-btn btn-compare"
+                                                                                           href="#"
+                                                                                           title="Add to Compare"><i
+                                                                                                class="pe-7s-refresh-2"></i></a>
+                                                                                        <a class="action-btn btn-quickview"
+                                                                                           data-toggle="modal"
+                                                                                           data-target="#product_quick_view"
+                                                                                           href="#"
+                                                                                           title="Quick View">
+                                                                                            <i class="pe-7s-search"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- end of product-image -->
+                                                                                <div class="product-caption">
+                                                                                    <h4 class="product-name">
+                                                                                        <a th:href="|@{/product/toSingleProduct.do}?pid=${product.pid}|" th:text="${product.name}"></a>
+                                                                                    </h4>
+                                                                                    <p class="product-price">
+                                                                                        <span class="price-new" th:text="${product.newPrice}"></span>
+                                                                                        <span class="price-old" th:text="${product.oldPrice}"></span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end of shop-products-wrapper -->
+                                            </div>
+                                        </div> <!-- end of row -->
+
+                                    </div> <!-- end of product-carousel -->
+                                </div> <!-- end of tab-pane -->
+
+                            </div> <!-- end of tab-content -->
+                        </div> <!-- end of best-selling-wrapper -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </section>
+        <!-- End of Best Selling Section -->
+    </main>
+    <!-- End of Main Content Wrapper -->
+
+    <div th:include="components/footer :: html"></div>
+
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- Initializing Photoswipe -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Photoswipe -->
+
+<!-- JS
+============================================ -->
+<!-- jQuery JS -->
+<script th:src="@{/js/jquery.1.12.4.min.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Plugins JS -->
+<script th:src="@{/js/plugins.js}"></script>
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+<script type="text/javascript">
+    $("#cart").click(function () {
+        window.location.href = "/admin/queryCart.do";
+    })
+</script>
+</body>
+</html>
